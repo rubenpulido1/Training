@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@startDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@endDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT        SUM(FeeDistributions.Amount) AS TotalAmount, Funds.FundNumber, Funds.AccountNumber, Funds.ProjectId, Departments.Name, Funds.Description, FeeDistributions.FeeId, FeeDistributions.FundId, 
+                         Departments.Director_Name, Departments.Director_Title
+FROM            FeeDistributions INNER JOIN
+                         Funds ON FeeDistributions.FundId = Funds.Id INNER JOIN
+                         Units ON Funds.UnitId = Units.Id INNER JOIN
+                         Departments ON Units.DepartmentId = Departments.Id
+WHERE        (FeeDistributions.CreatedAt BETWEEN @startDate AND @endDate) AND (Funds.UnitId = @unitId)
+GROUP BY FeeDistributions.FeeId, FeeDistributions.FundId, Funds.FundNumber, Funds.AccountNumber, Funds.ProjectId, Departments.Name, Funds.Description, Departments.Director_Name, Departments.Director_Title</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="TotalAmount">
+        <DataField>TotalAmount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="FundNumber">
+        <DataField>FundNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="AccountNumber">
+        <DataField>AccountNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ProjectId">
+        <DataField>ProjectId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Description">
+        <DataField>Description</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FeeId">
+        <DataField>FeeId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="FundId">
+        <DataField>FundId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="Director_Name">
+        <DataField>Director_Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Director_Title">
+        <DataField>Director_Title</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

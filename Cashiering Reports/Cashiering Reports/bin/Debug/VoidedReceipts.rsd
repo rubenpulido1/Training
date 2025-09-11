@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@startDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@endDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT        Transactions.InvoiceNumber, Transactions.TransactionDate, Transactions.VoidedStatus_VoidedBy, Transactions.VoidedStatus_VoidedOn, Transactions.Comments, Transactions.UserId, Users.FirstName, Users.LastName, 
+                         Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, Departments.Address_ZipCode, Departments.Phone_Number, Departments.Phone_Extension, 
+                         Void_User.FirstName AS Void_UserFirstName, Void_User.LastName AS Void_UserLastName, Transactions.VoidedStatus_Comments
+FROM            Transactions INNER JOIN
+                         Users ON Transactions.UserId = Users.Id INNER JOIN
+                         Users AS Void_User ON Transactions.VoidedStatus_VoidedBy = Void_User.Id INNER JOIN
+                         Units ON Transactions.UnitId = Units.Id INNER JOIN
+                         Departments ON Units.DepartmentId = Departments.Id
+WHERE        (Transactions.VoidedStatus_VoidedOn IS NOT NULL) AND (Transactions.TransactionDate BETWEEN @startDate AND @endDate) AND (Transactions.UnitId = @unitId)</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="InvoiceNumber">
+        <DataField>InvoiceNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TransactionDate">
+        <DataField>TransactionDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_VoidedBy">
+        <DataField>VoidedStatus_VoidedBy</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_VoidedOn">
+        <DataField>VoidedStatus_VoidedOn</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="Comments">
+        <DataField>Comments</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="UserId">
+        <DataField>UserId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="FirstName">
+        <DataField>FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="LastName">
+        <DataField>LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_City">
+        <DataField>Address_City</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_State">
+        <DataField>Address_State</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_Street">
+        <DataField>Address_Street</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_ZipCode">
+        <DataField>Address_ZipCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Number">
+        <DataField>Phone_Number</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Extension">
+        <DataField>Phone_Extension</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Void_UserFirstName">
+        <DataField>Void_UserFirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Void_UserLastName">
+        <DataField>Void_UserLastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_Comments">
+        <DataField>VoidedStatus_Comments</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

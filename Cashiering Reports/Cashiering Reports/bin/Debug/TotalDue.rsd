@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@paramInvoiceNum">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT        SUM(Transactions_LineItems.Amount) AS Subtotal, Transactions_LineItems.TransactionId, Transactions_LineItems.SalesTaxAmount, SalesTax.Amount AS SalesTaxPercentage, Transactions.Amount AS TotalAmountDue
+FROM            Transactions INNER JOIN
+                         Transactions_LineItems ON Transactions.Id = Transactions_LineItems.TransactionId CROSS JOIN
+                         SalesTax
+WHERE        (Transactions.InvoiceNumber = @paramInvoiceNum)
+GROUP BY Transactions_LineItems.TransactionId, Transactions_LineItems.SalesTaxAmount, SalesTax.Amount, Transactions.Amount</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Subtotal">
+        <DataField>Subtotal</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="TransactionId">
+        <DataField>TransactionId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="SalesTaxAmount">
+        <DataField>SalesTaxAmount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="SalesTaxPercentage">
+        <DataField>SalesTaxPercentage</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="TotalAmountDue">
+        <DataField>TotalAmountDue</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

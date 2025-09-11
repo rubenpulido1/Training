@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Cashiering Reports", "Cashiering Reports\Cashiering Reports.rptproj", "{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.Debug|Default.ActiveCfg = Debug
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.Debug|Default.Build.0 = Debug
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.Debug|Default.Deploy.0 = Debug
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.DebugLocal|Default.Build.0 = DebugLocal
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.Release|Default.ActiveCfg = Release
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.Release|Default.Build.0 = Release
+		{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B669207-9F83-491B-B072-D02DFD20F100}
+	EndGlobalSection
+EndGlobal

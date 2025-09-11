@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@startDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@endDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT        Units.Description, PaymentMethodAdjustments.CreatedAt, PaymentMethodAdjustments.Reason, Users.FirstName, Users.LastName, PaymentMethodAdjustments.Amount, NULL AS OsPaymentMethod, NULL 
+                         AS OsAdjustmentType, po_from.PaymentMethod AS PaymentMethodFrom, po_to.PaymentMethod AS PaymentMethodTo, Departments.Name, Departments.Address_Street, Departments.Address_City, 
+                         Departments.Address_State, Departments.Address_ZipCode, Departments.Phone_Number, Departments.Phone_Extension
+FROM            Units INNER JOIN
+                         PaymentMethodAdjustments ON Units.Id = PaymentMethodAdjustments.UnitId INNER JOIN
+                         Users ON PaymentMethodAdjustments.CreatedBy = Users.Id INNER JOIN
+                         PaymentOptions AS po_from ON PaymentMethodAdjustments.FromPaymentOptionId = po_from.Id INNER JOIN
+                         PaymentOptions AS po_to ON PaymentMethodAdjustments.ToPaymentOptionId = po_to.Id INNER JOIN
+                         Departments ON Units.DepartmentId = Departments.Id
+WHERE        (PaymentMethodAdjustments.CreatedAt BETWEEN @startDate AND @endDate)
+UNION
+SELECT        Units_1.Description, OverShortAdjustments.CreatedAt, OverShortAdjustments.Reason, Users_1.FirstName, Users_1.LastName, OverShortAdjustments.Amount, PaymentOptions.PaymentMethod, 
+                         OverShortAdjustments.AdjustmentType, NULL AS Col9, NULL AS Col10, Departments_1.Name, Departments_1.Address_Street, Departments_1.Address_City, Departments_1.Address_State, Departments_1.Address_ZipCode, 
+                         Departments_1.Phone_Number, Departments_1.Phone_Extension
+FROM            Units AS Units_1 INNER JOIN
+                         OverShortAdjustments ON Units_1.Id = OverShortAdjustments.UnitId INNER JOIN
+                         Users AS Users_1 ON OverShortAdjustments.CreatedBy = Users_1.Id INNER JOIN
+                         PaymentOptions ON OverShortAdjustments.PaymentOptionId = PaymentOptions.Id INNER JOIN
+                         Departments AS Departments_1 ON Units_1.DepartmentId = Departments_1.Id
+WHERE        (OverShortAdjustments.CreatedAt BETWEEN @startDate AND @endDate)</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Description">
+        <DataField>Description</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CreatedAt">
+        <DataField>CreatedAt</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="Reason">
+        <DataField>Reason</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FirstName">
+        <DataField>FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="LastName">
+        <DataField>LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="OsPaymentMethod">
+        <DataField>OsPaymentMethod</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="OsAdjustmentType">
+        <DataField>OsAdjustmentType</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="PaymentMethodFrom">
+        <DataField>PaymentMethodFrom</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="PaymentMethodTo">
+        <DataField>PaymentMethodTo</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_Street">
+        <DataField>Address_Street</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_City">
+        <DataField>Address_City</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_State">
+        <DataField>Address_State</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_ZipCode">
+        <DataField>Address_ZipCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Number">
+        <DataField>Phone_Number</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Extension">
+        <DataField>Phone_Extension</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

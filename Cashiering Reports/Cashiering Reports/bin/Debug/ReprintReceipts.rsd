@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@paramInvoiceNum">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT        Transactions.Payee_FirstName, Transactions.Payee_MiddleName, Transactions.Payee_LastName, Transactions.Comments, Transactions.VoidedStatus_VoidedOn, Transactions.VoidedStatus_VoidedBy, 
+                         Transactions.TransactionDate, Transactions.Amount AS Total_Amount, Transactions.ChangeDue, Transactions_Payments.Amount, PaymentOptions.PaymentMethod, Transactions.InvoiceNumber, 
+                         Users_VoidedBy.FirstName AS Voider_FirstName, Users_VoidedBy.LastName AS Voider_LastName, Users.FirstName, Users.LastName, Departments.Name, Departments.Address_State, Departments.Address_Street, 
+                         Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number, Departments.Address_City
+FROM            Transactions INNER JOIN
+                         Users ON Transactions.UserId = Users.Id INNER JOIN
+                         Transactions_Payments ON Transactions.Id = Transactions_Payments.TransactionId INNER JOIN
+                         PaymentOptions ON Transactions_Payments.PaymentOptionId = PaymentOptions.Id FULL OUTER JOIN
+                         Users AS Users_VoidedBy ON Transactions.VoidedStatus_VoidedBy = Users_VoidedBy.Id INNER JOIN
+                         Units ON Transactions.UnitId = Units.Id INNER JOIN
+                         Departments ON Units.DepartmentId = Departments.Id
+WHERE        (Transactions.InvoiceNumber = @paramInvoiceNum)</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Payee_FirstName">
+        <DataField>Payee_FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Payee_MiddleName">
+        <DataField>Payee_MiddleName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Payee_LastName">
+        <DataField>Payee_LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Comments">
+        <DataField>Comments</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_VoidedOn">
+        <DataField>VoidedStatus_VoidedOn</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_VoidedBy">
+        <DataField>VoidedStatus_VoidedBy</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="TransactionDate">
+        <DataField>TransactionDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_State">
+        <DataField>Address_State</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_Street">
+        <DataField>Address_Street</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_ZipCode">
+        <DataField>Address_ZipCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Extension">
+        <DataField>Phone_Extension</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Number">
+        <DataField>Phone_Number</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Total_Amount">
+        <DataField>Total_Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="PaymentMethod">
+        <DataField>PaymentMethod</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ChangeDue">
+        <DataField>ChangeDue</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="InvoiceNumber">
+        <DataField>InvoiceNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Voider_FirstName">
+        <DataField>Voider_FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Voider_LastName">
+        <DataField>Voider_LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FirstName">
+        <DataField>FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="LastName">
+        <DataField>LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_City">
+        <DataField>Address_City</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

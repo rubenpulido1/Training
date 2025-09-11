@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Cashiering</DataSourceReference>
+      <CommandText>SELECT        SUM(Transactions_LineItems.Amount) AS Expr1, Transactions_LineItems.TransactionId, Transactions_LineItems.SalesTaxAmount
+FROM            Transactions INNER JOIN
+                         Transactions_LineItems ON Transactions.Id = Transactions_LineItems.TransactionId
+WHERE        (Transactions.InvoiceNumber = 'TD250000001')
+GROUP BY Transactions_LineItems.TransactionId, Transactions_LineItems.SalesTaxAmount</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Expr1">
+        <DataField>Expr1</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="TransactionId">
+        <DataField>TransactionId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="SalesTaxAmount">
+        <DataField>SalesTaxAmount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
