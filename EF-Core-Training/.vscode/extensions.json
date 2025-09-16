@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+		"ms-dotnettools.csharp",
+		"ms-mssql.mssql",
+    "ckolkman.vscode-postgres",
+    "vsls-contrib.codetour"
+    ],
+}
