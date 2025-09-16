@@ -1,18 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\SSRS\\Cashiering Reports\\",
+  "WorkspaceRootPath": "C:\\Projects\\Training\\Cashiering Reports\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\VoidedReceipts.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
-      "RelativeMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|solutionrelative:Cashiering Reports\\VoidedReceipts.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+      "AbsoluteMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\FeeDistributions.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|solutionrelative:Cashiering Reports\\FeeDistributions.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\MonthlyStatements.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "AbsoluteMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\MonthlyStatements.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
       "RelativeMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|solutionrelative:Cashiering Reports\\MonthlyStatements.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\ProjectsList.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
-      "RelativeMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|solutionrelative:Cashiering Reports\\ProjectsList.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+      "AbsoluteMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\CertificatesList.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|solutionrelative:Cashiering Reports\\CertificatesList.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\DepositItemsSummary.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}",
+      "RelativeMoniker": "D:0:0:{4C64E1C0-BD59-67CF-48F1-5B7EBB24DBD2}|Cashiering Reports\\Cashiering Reports.rptproj|solutionrelative:Cashiering Reports\\DepositItemsSummary.rdl||{420F4200-DD61-4785-81F3-52669CBC208E}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,36 +32,48 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "MonthlyStatements.rdl [Design]",
-              "DocumentMoniker": "C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\MonthlyStatements.rdl",
+              "DocumentMoniker": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\MonthlyStatements.rdl",
               "RelativeDocumentMoniker": "Cashiering Reports\\MonthlyStatements.rdl",
-              "ToolTip": "C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\MonthlyStatements.rdl [Design]",
+              "ToolTip": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\MonthlyStatements.rdl [Design]",
               "RelativeToolTip": "Cashiering Reports\\MonthlyStatements.rdl [Design]",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIPSURBVDhPVZM9a1RBGIWfmb2bLMkmKGQxHxDRJp1aGBGR/AD/iY0/QMSPQrBJpzbmJ1gIlnYWWonY2QgiFiJGza7r7s7Heyxm7iYODHeKOed93vPOddSVvj0iBE93sXc9fH9xkEbvdsCDQALqFghxC3h8eu\u002Bn/Elx09hly2GfzvIOBqp7Li5fh1hDgHPO58NnTI\u002B\u002B0O36XeGfAleQQ6rlVI0EktqzpELu49EHmiZdyuHHE8XhruIvLPxG5kr1VmwCuTkN1cAdvd0CdBuah22DSlOwVO60JAazMViEFPQ6jDgAPfcWx1j827U4xOIQCyOUY\u002Bl3jg6WHZNDMT4UsxF7Eg9MbuALlhPmakgOqeBLKiYmlI2chbJQBjM6yjhfk3alYmsyD0xmHt9bp7t6lpWtbXprA0yumGTwJ0MpJiqBlfG5mBt1lrZoVjbpb2zQ31wnWQfL5V5LUBOvY2p7z4bl7CwFLE6wOEUpkEsLmIFXHapM88AQmBo6py6wdOYaTf88fmGAcsJSqJmUYI8J6qhKO1KyHouDqyxv7LKweo6mv12EKWBZWAbLOpHBsYlkuEIUUZ4gm4IFlAOWI6r4yswJUksg4Y4zCaAANkMWsDT7n8CgvAPcS8QdxH3EPcRd3/T2ndMQmxUjq\u002BIYyluoBK79nU\u002BuyaebOBgIvUL5IggLY8af3zAd/eHrx0jHeI/cjX8kr9fPRmpbRQAAAABJRU5ErkJggg==",
-              "WhenOpened": "2025-09-11T16:32:15.587Z",
+              "WhenOpened": "2025-09-16T16:50:33.387Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "VoidedReceipts.rdl [Design]",
-              "DocumentMoniker": "C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\VoidedReceipts.rdl",
-              "RelativeDocumentMoniker": "Cashiering Reports\\VoidedReceipts.rdl",
-              "ToolTip": "C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\VoidedReceipts.rdl [Design]",
-              "RelativeToolTip": "Cashiering Reports\\VoidedReceipts.rdl [Design]",
+              "Title": "FeeDistributions.rdl [Design]",
+              "DocumentMoniker": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\FeeDistributions.rdl",
+              "RelativeDocumentMoniker": "Cashiering Reports\\FeeDistributions.rdl",
+              "ToolTip": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\FeeDistributions.rdl [Design]",
+              "RelativeToolTip": "Cashiering Reports\\FeeDistributions.rdl [Design]",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIPSURBVDhPVZM9a1RBGIWfmb2bLMkmKGQxHxDRJp1aGBGR/AD/iY0/QMSPQrBJpzbmJ1gIlnYWWonY2QgiFiJGza7r7s7Heyxm7iYODHeKOed93vPOddSVvj0iBE93sXc9fH9xkEbvdsCDQALqFghxC3h8eu\u002Bn/Elx09hly2GfzvIOBqp7Li5fh1hDgHPO58NnTI\u002B\u002B0O36XeGfAleQQ6rlVI0EktqzpELu49EHmiZdyuHHE8XhruIvLPxG5kr1VmwCuTkN1cAdvd0CdBuah22DSlOwVO60JAazMViEFPQ6jDgAPfcWx1j827U4xOIQCyOUY\u002Bl3jg6WHZNDMT4UsxF7Eg9MbuALlhPmakgOqeBLKiYmlI2chbJQBjM6yjhfk3alYmsyD0xmHt9bp7t6lpWtbXprA0yumGTwJ0MpJiqBlfG5mBt1lrZoVjbpb2zQ31wnWQfL5V5LUBOvY2p7z4bl7CwFLE6wOEUpkEsLmIFXHapM88AQmBo6py6wdOYaTf88fmGAcsJSqJmUYI8J6qhKO1KyHouDqyxv7LKweo6mv12EKWBZWAbLOpHBsYlkuEIUUZ4gm4IFlAOWI6r4yswJUksg4Y4zCaAANkMWsDT7n8CgvAPcS8QdxH3EPcRd3/T2ndMQmxUjq\u002BIYyluoBK79nU\u002BuyaebOBgIvUL5IggLY8af3zAd/eHrx0jHeI/cjX8kr9fPRmpbRQAAAABJRU5ErkJggg==",
-              "WhenOpened": "2025-09-11T16:04:06.405Z",
+              "WhenOpened": "2025-09-16T15:17:10.108Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DepositItemsSummary.rdl [Design]",
+              "DocumentMoniker": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\DepositItemsSummary.rdl",
+              "RelativeDocumentMoniker": "Cashiering Reports\\DepositItemsSummary.rdl",
+              "ToolTip": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\DepositItemsSummary.rdl [Design]",
+              "RelativeToolTip": "Cashiering Reports\\DepositItemsSummary.rdl [Design]",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIPSURBVDhPVZM9a1RBGIWfmb2bLMkmKGQxHxDRJp1aGBGR/AD/iY0/QMSPQrBJpzbmJ1gIlnYWWonY2QgiFiJGza7r7s7Heyxm7iYODHeKOed93vPOddSVvj0iBE93sXc9fH9xkEbvdsCDQALqFghxC3h8eu\u002Bn/Elx09hly2GfzvIOBqp7Li5fh1hDgHPO58NnTI\u002B\u002B0O36XeGfAleQQ6rlVI0EktqzpELu49EHmiZdyuHHE8XhruIvLPxG5kr1VmwCuTkN1cAdvd0CdBuah22DSlOwVO60JAazMViEFPQ6jDgAPfcWx1j827U4xOIQCyOUY\u002Bl3jg6WHZNDMT4UsxF7Eg9MbuALlhPmakgOqeBLKiYmlI2chbJQBjM6yjhfk3alYmsyD0xmHt9bp7t6lpWtbXprA0yumGTwJ0MpJiqBlfG5mBt1lrZoVjbpb2zQ31wnWQfL5V5LUBOvY2p7z4bl7CwFLE6wOEUpkEsLmIFXHapM88AQmBo6py6wdOYaTf88fmGAcsJSqJmUYI8J6qhKO1KyHouDqyxv7LKweo6mv12EKWBZWAbLOpHBsYlkuEIUUZ4gm4IFlAOWI6r4yswJUksg4Y4zCaAANkMWsDT7n8CgvAPcS8QdxH3EPcRd3/T2ndMQmxUjq\u002BIYyluoBK79nU\u002BuyaebOBgIvUL5IggLY8af3zAd/eHrx0jHeI/cjX8kr9fPRmpbRQAAAABJRU5ErkJggg==",
+              "WhenOpened": "2025-09-15T20:17:06.965Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ProjectsList.rdl [Design]",
-              "DocumentMoniker": "C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\ProjectsList.rdl",
-              "RelativeDocumentMoniker": "Cashiering Reports\\ProjectsList.rdl",
-              "ToolTip": "C:\\SSRS\\Cashiering Reports\\Cashiering Reports\\ProjectsList.rdl [Design]",
-              "RelativeToolTip": "Cashiering Reports\\ProjectsList.rdl [Design]",
+              "Title": "CertificatesList.rdl [Design]",
+              "DocumentMoniker": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\CertificatesList.rdl",
+              "RelativeDocumentMoniker": "Cashiering Reports\\CertificatesList.rdl",
+              "ToolTip": "C:\\Projects\\Training\\Cashiering Reports\\Cashiering Reports\\CertificatesList.rdl [Design]",
+              "RelativeToolTip": "Cashiering Reports\\CertificatesList.rdl [Design]",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIPSURBVDhPVZM9a1RBGIWfmb2bLMkmKGQxHxDRJp1aGBGR/AD/iY0/QMSPQrBJpzbmJ1gIlnYWWonY2QgiFiJGza7r7s7Heyxm7iYODHeKOed93vPOddSVvj0iBE93sXc9fH9xkEbvdsCDQALqFghxC3h8eu\u002Bn/Elx09hly2GfzvIOBqp7Li5fh1hDgHPO58NnTI\u002B\u002B0O36XeGfAleQQ6rlVI0EktqzpELu49EHmiZdyuHHE8XhruIvLPxG5kr1VmwCuTkN1cAdvd0CdBuah22DSlOwVO60JAazMViEFPQ6jDgAPfcWx1j827U4xOIQCyOUY\u002Bl3jg6WHZNDMT4UsxF7Eg9MbuALlhPmakgOqeBLKiYmlI2chbJQBjM6yjhfk3alYmsyD0xmHt9bp7t6lpWtbXprA0yumGTwJ0MpJiqBlfG5mBt1lrZoVjbpb2zQ31wnWQfL5V5LUBOvY2p7z4bl7CwFLE6wOEUpkEsLmIFXHapM88AQmBo6py6wdOYaTf88fmGAcsJSqJmUYI8J6qhKO1KyHouDqyxv7LKweo6mv12EKWBZWAbLOpHBsYlkuEIUUZ4gm4IFlAOWI6r4yswJUksg4Y4zCaAANkMWsDT7n8CgvAPcS8QdxH3EPcRd3/T2ndMQmxUjq\u002BIYyluoBK79nU\u002BuyaebOBgIvUL5IggLY8af3zAd/eHrx0jHeI/cjX8kr9fPRmpbRQAAAABJRU5ErkJggg==",
-              "WhenOpened": "2025-09-05T21:16:33.578Z",
+              "WhenOpened": "2025-09-15T18:09:58.349Z",
               "EditorCaption": " [Design]"
             }
           ]

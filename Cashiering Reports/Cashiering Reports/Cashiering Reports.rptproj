@@ -49,7 +49,11 @@
     <Reports>@(Report)</Reports>
   </PropertyGroup>
   <ItemGroup>
+    <DataSet Include="CertificatesList.rsd" />
+    <DataSet Include="DepositItemsSummary.rsd" />
+    <DataSet Include="DepositPermit.rsd" />
     <DataSet Include="FeeDescription.rsd" />
+    <DataSet Include="FeeDistributions.rsd" />
     <DataSet Include="ListReceipts.rsd" />
     <DataSet Include="MonthlyStatements.rsd" />
     <DataSet Include="OverShortageAdj.rsd" />
@@ -59,12 +63,17 @@
     <DataSet Include="ProjectsSummary.rsd" />
     <DataSet Include="ReprintReceipts.rsd" />
     <DataSet Include="TotalDue.rsd" />
+    <DataSet Include="TransactionByPayee.rsd" />
     <DataSet Include="VoidedReceipts.rsd" />
   </ItemGroup>
   <ItemGroup>
     <DataSource Include="Cashiering.rds" />
   </ItemGroup>
   <ItemGroup>
+    <Report Include="CertificatesList.rdl" />
+    <Report Include="DepositItemsSummary.rdl" />
+    <Report Include="DepositPermit.rdl" />
+    <Report Include="FeeDistributions.rdl" />
     <Report Include="ListReceipts.rdl" />
     <Report Include="MonthlyStatements.rdl" />
     <Report Include="OverShortageAdj.rdl" />
@@ -73,6 +82,7 @@
     <Report Include="ProjectsList.rdl" />
     <Report Include="ProjectsSummary.rdl" />
     <Report Include="ReprintReceipts.rdl" />
+    <Report Include="TransactionByPayee.rdl" />
     <Report Include="VoidedReceipts.rdl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Reporting Services\Microsoft.ReportingServices.MSBuilder.targets" />

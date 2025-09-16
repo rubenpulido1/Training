@@ -7,9 +7,9 @@
     </am:CreatedBy>
     <am:UpdatedBy>
       <am:Name>SSDTRS</am:Name>
-      <am:Version>17.14.36414.22</am:Version>
+      <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-11T16:04:06.3881890Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-15T18:11:47.9640118Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -596,7 +596,7 @@
             <Top>0.05556in</Top>
             <Left>0.25in</Left>
             <Height>0.5in</Height>
-            <Width>8in</Width>
+            <Width>7.99998in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -726,6 +726,29 @@ Right(Fields!Phone_Number.Value, 4)</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                         <FontWeight>SemiBold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!startDate.Value</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>SemiBold</FontWeight>
+                        <Format>d</Format>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> to </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value>=Parameters!endDate.Value</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>SemiBold</FontWeight>
+                        <Format>d</Format>
                       </Style>
                     </TextRun>
                   </TextRuns>

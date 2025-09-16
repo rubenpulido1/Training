@@ -4781,11 +4781,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\FullStack-Training\\API\\API.csproj",
+      "projectUniqueName": "C:\\Projects\\Training\\FullStack-Training\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "C:\\Projects\\FullStack-Training\\API\\API.csproj",
+      "projectPath": "C:\\Projects\\Training\\FullStack-Training\\API\\API.csproj",
       "packagesPath": "C:\\Users\\ruben.pulido\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\FullStack-Training\\API\\obj\\",
+      "outputPath": "C:\\Projects\\Training\\FullStack-Training\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

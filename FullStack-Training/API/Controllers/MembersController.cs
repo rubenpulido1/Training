@@ -2,6 +2,7 @@ using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -15,18 +16,18 @@ namespace API.Controllers
 
     // Endpoints that allow us to return HTTP responses.
     [HttpGet]
-    public ActionResult<IReadOnlyList<AppUser>> GetMembers()
+    public async Task<ActionResult<IReadOnlyList<AppUser>>> GetMembers()
     {
-      List<AppUser> members = context.Users.ToList();
+      List<AppUser> members = await context.Users.ToListAsync();
       return members;
     }
 
     // id here is a route parameter
     [HttpGet("{id}")] //localhost:5001/api/members/bob-id
-    public ActionResult<AppUser> GetMember(string id)
+    public async Task<ActionResult<AppUser>> GetMember(string id)
     {
       // Find method fines an entity with the given primary key values.
-      AppUser? member = context.Users.Find(id);
+      AppUser? member = await context.Users.FindAsync(id);
 
       if (member == null)
       {

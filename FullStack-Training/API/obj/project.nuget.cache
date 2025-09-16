@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3cZOjZJ0R8E=",
+  "dgSpecHash": "43IwZBc7u2k=",
   "success": true,
-  "projectFilePath": "C:\\Projects\\FullStack-Training\\API\\API.csproj",
+  "projectFilePath": "C:\\Projects\\Training\\FullStack-Training\\API\\API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ruben.pulido\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\ruben.pulido\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
