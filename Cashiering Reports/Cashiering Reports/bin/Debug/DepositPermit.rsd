@@ -25,12 +25,12 @@
           <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>Int32</rd:DbType>
         </DataSetParameter>
-        <DataSetParameter Name="@directDeposit">
+        <DataSetParameter Name="@paymentOptionId">
           <ReadOnly>false</ReadOnly>
-          <Nullable>false</Nullable>
+          <Nullable>true</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
           <rd:UserDefined>true</rd:UserDefined>
-          <rd:DbType>Boolean</rd:DbType>
+          <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
       <CommandText>SELECT        UnitId, InvoiceNumber, TransactionDate, Amount

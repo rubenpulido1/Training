@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-15T20:17:06.9484562Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-09-18T16:53:49.1625643Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -37,8 +37,8 @@
             <Value>=Parameters!lessChange.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
-          <QueryParameter Name="@directDeposit">
-            <Value>=Parameters!directDeposit.Value</Value>
+          <QueryParameter Name="@paymentOptionId">
+            <Value>=Parameters!paymentOptionId.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
@@ -83,7 +83,10 @@
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>1.03125in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.51042in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -231,6 +234,49 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox18</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Payment Option Id</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -403,12 +449,45 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox3">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!paymentOptionId.Value</Value>
+                                  <Style>
+                                    <FontFamily>Arial</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -428,9 +507,9 @@
             </TablixRowHierarchy>
             <DataSetName>DepositPermit</DataSetName>
             <Top>0.14458in</Top>
-            <Left>1.75in</Left>
+            <Left>1.17708in</Left>
             <Height>0.5in</Height>
-            <Width>5in</Width>
+            <Width>6.54167in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -610,7 +689,7 @@
   <ReportParameters>
     <ReportParameter Name="date">
       <DataType>DateTime</DataType>
-      <Prompt>'Deposit for' Date: </Prompt>
+      <Prompt>Deposit for Date: </Prompt>
     </ReportParameter>
     <ReportParameter Name="unitId">
       <DataType>String</DataType>
@@ -619,11 +698,12 @@
     <ReportParameter Name="lessChange">
       <DataType>Integer</DataType>
       <Nullable>true</Nullable>
-      <Prompt>'Less Change' Amount:</Prompt>
+      <Prompt>Less Change Amount:</Prompt>
     </ReportParameter>
-    <ReportParameter Name="directDeposit">
-      <DataType>Boolean</DataType>
-      <Prompt>Direct Deposit</Prompt>
+    <ReportParameter Name="paymentOptionId">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>Payment Option Id: </Prompt>
     </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
@@ -649,7 +729,7 @@
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>1</RowIndex>
-          <ParameterName>directDeposit</ParameterName>
+          <ParameterName>paymentOptionId</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

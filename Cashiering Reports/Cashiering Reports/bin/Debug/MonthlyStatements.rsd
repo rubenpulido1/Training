@@ -27,13 +27,15 @@
         </DataSetParameter>
       </DataSetParameters>
       <CommandText>SELECT        SUM(FeeDistributions.Amount) AS TotalAmount, Funds.FundNumber, Funds.AccountNumber, Funds.ProjectId, Departments.Name, Funds.Description, FeeDistributions.FeeId, FeeDistributions.FundId, 
-                         Departments.Director_Name, Departments.Director_Title
+                         Departments.Director_Name, Departments.Director_Title, Projects.ProjectNumber
 FROM            FeeDistributions INNER JOIN
-                         Funds ON FeeDistributions.FundId = Funds.Id INNER JOIN
+                         Funds ON FeeDistributions.FundId = Funds.Id LEFT OUTER JOIN
+                         Projects ON Funds.ProjectId = Projects.Id INNER JOIN
                          Units ON Funds.UnitId = Units.Id INNER JOIN
                          Departments ON Units.DepartmentId = Departments.Id
 WHERE        (FeeDistributions.CreatedAt BETWEEN @startDate AND @endDate) AND (Funds.UnitId = @unitId)
-GROUP BY FeeDistributions.FeeId, FeeDistributions.FundId, Funds.FundNumber, Funds.AccountNumber, Funds.ProjectId, Departments.Name, Funds.Description, Departments.Director_Name, Departments.Director_Title</CommandText>
+GROUP BY FeeDistributions.FeeId, FeeDistributions.FundId, Funds.FundNumber, Funds.AccountNumber, Funds.ProjectId, Departments.Name, Funds.Description, Departments.Director_Name, Departments.Director_Title, 
+                         Projects.ProjectNumber</CommandText>
     </Query>
     <Fields>
       <Field Name="TotalAmount">
@@ -74,6 +76,10 @@ GROUP BY FeeDistributions.FeeId, FeeDistributions.FundId, Funds.FundNumber, Fund
       </Field>
       <Field Name="Director_Title">
         <DataField>Director_Title</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ProjectNumber">
+        <DataField>ProjectNumber</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
     </Fields>
