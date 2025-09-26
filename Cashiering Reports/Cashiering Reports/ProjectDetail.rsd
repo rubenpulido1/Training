@@ -4,56 +4,112 @@
     <Query>
       <DataSourceReference>Cashiering</DataSourceReference>
       <DataSetParameters>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
         <DataSetParameter Name="@startDate">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>DateTime</rd:DbType>
         </DataSetParameter>
         <DataSetParameter Name="@endDate">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>DateTime</rd:DbType>
-        </DataSetParameter>
-        <DataSetParameter Name="@unitId">
-          <ReadOnly>false</ReadOnly>
-          <Nullable>false</Nullable>
-          <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
-          <rd:DbType>String</rd:DbType>
         </DataSetParameter>
         <DataSetParameter Name="@projectId">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Projects.CreatedAt, Projects.Id AS ProjectId, Projects.UnitId, Projects.BudgetNumber
-FROM            Projects INNER JOIN
-                         Units ON Projects.UnitId = Units.Id
-WHERE        (Projects.CreatedAt BETWEEN @startDate AND @endDate) AND (Projects.Id = @projectId) AND (Projects.UnitId = @unitId)</CommandText>
+      <CommandText>WITH FundVersions AS (
+    SELECT
+        f2.Id AS FundId,
+        f2.FundNumber,
+        f2.BudgetNumber,
+        f2.AccountNumber,
+        ti.Amount,
+        t.TransactionDate,
+        t.InvoiceNumber,
+        f2.EffectiveDate,
+        f2.VersionSetId,
+        ti.Id AS LineItemId,
+        ROW_NUMBER() OVER (
+            PARTITION BY ti.Id, f2.VersionSetId
+            ORDER BY f2.EffectiveDate DESC
+        ) as FundRank
+    FROM Transactions t
+    INNER JOIN Transactions_LineItems ti ON t.Id = ti.TransactionId
+    INNER JOIN FeeDistributions fd ON ti.FeeId = fd.FeeId
+    INNER JOIN Funds f ON fd.FundId = f.Id
+    INNER JOIN Funds f2 ON f.VersionSetId = f2.VersionSetId
+    WHERE
+		t.UnitId = @unitId
+        AND t.TransactionDate &gt;= @startDate
+        AND t.TransactionDate &lt;= @endDate
+        AND t.VoidedStatus_VoidedOn IS NULL
+        AND f.ProjectId = @projectId
+        -- Only temporal logic on f2 (the fund version we want to display)
+        AND f2.EffectiveDate &lt;= CAST(t.TransactionDate AS DATE)
+        AND (f2.EffectiveEndDate IS NULL OR f2.EffectiveEndDate &gt; CAST(t.TransactionDate AS DATE))
+)
+SELECT
+    FundId,
+    FundNumber,
+    BudgetNumber,
+    AccountNumber,
+    Amount,
+    TransactionDate,
+    InvoiceNumber,
+    EffectiveDate,
+    VersionSetId
+FROM FundVersions
+WHERE FundRank = 1
+ORDER BY TransactionDate DESC, InvoiceNumber;</CommandText>
     </Query>
     <Fields>
-      <Field Name="CreatedAt">
-        <DataField>CreatedAt</DataField>
-        <rd:TypeName>System.DateTime</rd:TypeName>
-      </Field>
-      <Field Name="ProjectId">
-        <DataField>ProjectId</DataField>
+      <Field Name="FundId">
+        <DataField>FundId</DataField>
         <rd:TypeName>System.Guid</rd:TypeName>
       </Field>
-      <Field Name="UnitId">
-        <DataField>UnitId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
+      <Field Name="FundNumber">
+        <DataField>FundNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="BudgetNumber">
         <DataField>BudgetNumber</DataField>
         <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="AccountNumber">
+        <DataField>AccountNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="TransactionDate">
+        <DataField>TransactionDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="InvoiceNumber">
+        <DataField>InvoiceNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="EffectiveDate">
+        <DataField>EffectiveDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="VersionSetId">
+        <DataField>VersionSetId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>

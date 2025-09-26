@@ -4,12 +4,6 @@
     <Query>
       <DataSourceReference>Cashiering</DataSourceReference>
       <DataSetParameters>
-        <DataSetParameter Name="@unitId">
-          <ReadOnly>false</ReadOnly>
-          <Nullable>false</Nullable>
-          <OmitFromQuery>false</OmitFromQuery>
-          <rd:DbType>Object</rd:DbType>
-        </DataSetParameter>
         <DataSetParameter Name="@startDate">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
@@ -24,23 +18,132 @@
           <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>DateTime</rd:DbType>
         </DataSetParameter>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Id, Description, CreatedAt
-FROM            Units
-WHERE        (Id = @unitId) AND (CreatedAt BETWEEN @startDate AND @endDate)</CommandText>
+      <CommandText>SELECT        Units.Id, Units.CreatedAt, Certificates.CertificateName, Certificates.CertificateNumber, Fees.Description, Certificates.CreatedBy, Transactions.VoidedStatus_VoidedOn, Transactions.VoidedStatus_VoidedBy, 
+                         Certificates.DamagedCertificate_Reason, Certificates.DamagedCertificate_Date, Certificates.DamagedCertificate_DamagedByUserId, Users.FirstName, Users.LastName, Transactions.InvoiceNumber, 
+                         Transactions.VoidedStatus_Comments, Users_1.FirstName AS Voided_FirstName, Users_1.LastName AS Voided_LastName, Users_2.FirstName AS Damaged_FirstName, Users_2.LastName AS Damaged_LastName, 
+                         Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number
+FROM            Units INNER JOIN
+                         Certificates ON Units.Id = Certificates.UnitId INNER JOIN
+                         Fees ON Units.Id = Fees.UnitId AND Certificates.FeeId = Fees.Id INNER JOIN
+                         Transactions_LineItems ON Certificates.LineItemId = Transactions_LineItems.Id AND Fees.Id = Transactions_LineItems.FeeId INNER JOIN
+                         Transactions ON Units.Id = Transactions.UnitId AND Transactions_LineItems.TransactionId = Transactions.Id INNER JOIN
+                         Users ON Certificates.CreatedBy = Users.Id INNER JOIN
+                         Departments ON Units.DepartmentId = Departments.Id AND Users.DepartmentId = Departments.Id LEFT OUTER JOIN
+                         Users AS Users_1 ON Departments.Id = Users_1.DepartmentId AND Transactions.VoidedStatus_VoidedBy = Users_1.Id LEFT OUTER JOIN
+                         Users AS Users_2 ON Departments.Id = Users_2.DepartmentId AND Certificates.DamagedCertificate_DamagedByUserId = Users_2.Id</CommandText>
     </Query>
     <Fields>
       <Field Name="Id">
         <DataField>Id</DataField>
         <rd:TypeName>System.Guid</rd:TypeName>
       </Field>
+      <Field Name="CreatedAt">
+        <DataField>CreatedAt</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="CertificateName">
+        <DataField>CertificateName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CertificateNumber">
+        <DataField>CertificateNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
       <Field Name="Description">
         <DataField>Description</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
-      <Field Name="CreatedAt">
-        <DataField>CreatedAt</DataField>
+      <Field Name="CreatedBy">
+        <DataField>CreatedBy</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_VoidedOn">
+        <DataField>VoidedStatus_VoidedOn</DataField>
         <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_VoidedBy">
+        <DataField>VoidedStatus_VoidedBy</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="DamagedCertificate_Reason">
+        <DataField>DamagedCertificate_Reason</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="DamagedCertificate_Date">
+        <DataField>DamagedCertificate_Date</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="DamagedCertificate_DamagedByUserId">
+        <DataField>DamagedCertificate_DamagedByUserId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="FirstName">
+        <DataField>FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="LastName">
+        <DataField>LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="InvoiceNumber">
+        <DataField>InvoiceNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="VoidedStatus_Comments">
+        <DataField>VoidedStatus_Comments</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Voided_FirstName">
+        <DataField>Voided_FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Voided_LastName">
+        <DataField>Voided_LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Damaged_FirstName">
+        <DataField>Damaged_FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Damaged_LastName">
+        <DataField>Damaged_LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_City">
+        <DataField>Address_City</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_State">
+        <DataField>Address_State</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_Street">
+        <DataField>Address_Street</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_ZipCode">
+        <DataField>Address_ZipCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Extension">
+        <DataField>Phone_Extension</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Number">
+        <DataField>Phone_Number</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>

@@ -26,22 +26,36 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Id, Description, CreatedAt
-FROM            Units
-WHERE        (CreatedAt BETWEEN @startDate AND @endDate) AND (Id = @unitId)</CommandText>
+      <CommandText>SELECT        Fees.Description, SUM(Transactions_LineItems.Amount) AS Amount, DATENAME(m, Transactions_LineItems.CreatedAt) + ' ' + DATENAME(yy, Transactions_LineItems.CreatedAt) AS TransactionDate, 
+                         SUM(Transactions_LineItems.Quantity) AS Count, Departments.Name
+FROM            Units INNER JOIN
+                         Fees ON Units.Id = Fees.UnitId INNER JOIN
+                         Transactions_LineItems ON Fees.Id = Transactions_LineItems.FeeId INNER JOIN
+                         Departments ON Units.DepartmentId = Departments.Id
+WHERE        (Transactions_LineItems.CreatedAt BETWEEN @startDate AND @endDate) AND (Units.Id = @unitId)
+GROUP BY Fees.Description, DATENAME(m, Transactions_LineItems.CreatedAt) + ' ' + DATENAME(yy, Transactions_LineItems.CreatedAt), Departments.Name
+ORDER BY Fees.Description, TransactionDate</CommandText>
     </Query>
     <Fields>
-      <Field Name="Id">
-        <DataField>Id</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
       <Field Name="Description">
         <DataField>Description</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
-      <Field Name="CreatedAt">
-        <DataField>CreatedAt</DataField>
-        <rd:TypeName>System.DateTime</rd:TypeName>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="TransactionDate">
+        <DataField>TransactionDate</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Count">
+        <DataField>Count</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>
