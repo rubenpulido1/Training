@@ -11,10 +11,11 @@ import { RouterOutlet } from '@angular/router';
 export class App implements OnInit {
   protected readonly title = signal('client');
   private http = inject(HttpClient);
+  protected members = signal<any>([]);
 
   ngOnInit(): void {
     this.http.get("https://localhost:5001/api/members").subscribe({
-      next: response => console.log(response),
+      next: response => this.members.set(response),
       error: error => console.log(error),
       complete: () => console.log('Completed http request')
     })

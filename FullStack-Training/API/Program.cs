@@ -12,10 +12,20 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
   opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+// Registers CORS services in the dependency injection container, enabling CORS support in the app.
+builder.Services.AddCors();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+/*
+  Code below configures the HTTP request pipeline.
+*/
 
+// Adds the CORS middleware to the request pipeline and injects the CORS service to handle CORS for incoming requests.
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod()
+  .WithOrigins("http://localhost:4200", "https://localhost:4200"));
+
+// Maps HTTP requests to controller action methods based on route attributes.
 app.MapControllers();
 
 app.Run();
