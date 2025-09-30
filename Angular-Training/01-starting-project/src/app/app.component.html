@@ -2,8 +2,10 @@
 
 <main>
   <ul id="users">
-    <li>
-        <app-user></app-user>
-    </li>
+    @for (user of users; track user) {
+      <li>
+        <app-user [avatar]="user.avatar" [name]="user.name"></app-user>
+      </li>
+    }
   </ul>
 </main>
