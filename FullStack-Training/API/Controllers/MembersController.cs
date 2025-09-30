@@ -7,6 +7,8 @@ namespace API.Controllers
 {
 
   // Injecting AppDbContext, any services registered in Program.cs are made available for dependency injection to other classes.
+  // Injecting AppDbContext into a controller provides access to the database via Entity Framework Core, enabling you to query, modify, and save data.
+
   public class MembersController(AppDbContext context) : BaseApiController
   {
 
@@ -32,6 +34,6 @@ namespace API.Controllers
 
       return member;
     }
-    
+
   }
 }
