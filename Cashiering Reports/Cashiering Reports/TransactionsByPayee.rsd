@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@startDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@endDate">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>DateTime</rd:DbType>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT        Transactions.InvoiceNumber, Transactions.Amount, Transactions.ChangeDue, STRING_AGG(Fees.Description, ', ') AS FeesDescription, Transactions.TransactionDate, Transactions.Payee_FirstName AS FirstName, 
+                         Transactions.Payee_LastName AS LastName, Transactions.Payee_MiddleName AS MiddleName, Units.Description, Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, 
+                         Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number
+FROM            Transactions INNER JOIN
+                         Transactions_LineItems ON Transactions.Id = Transactions_LineItems.TransactionId INNER JOIN
+                         Fees ON Transactions_LineItems.FeeId = Fees.Id INNER JOIN
+                         Units ON Transactions.UnitId = Units.Id INNER JOIN
+                         Departments ON Units.DepartmentId = Departments.Id
+WHERE        (Transactions.UnitId = @unitId) AND (Transactions.TransactionDate BETWEEN @startDate AND @endDate)
+GROUP BY Transactions.InvoiceNumber, Transactions.Amount, Transactions.ChangeDue, Transactions.TransactionDate, Transactions.Payee_FirstName, Transactions.Payee_LastName, Transactions.Payee_MiddleName, 
+                         Units.Description, Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="InvoiceNumber">
+        <DataField>InvoiceNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="ChangeDue">
+        <DataField>ChangeDue</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="FeesDescription">
+        <DataField>FeesDescription</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="TransactionDate">
+        <DataField>TransactionDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="FirstName">
+        <DataField>FirstName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="LastName">
+        <DataField>LastName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="MiddleName">
+        <DataField>MiddleName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Description">
+        <DataField>Description</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_City">
+        <DataField>Address_City</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_State">
+        <DataField>Address_State</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_Street">
+        <DataField>Address_Street</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Address_ZipCode">
+        <DataField>Address_ZipCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Extension">
+        <DataField>Phone_Extension</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Phone_Number">
+        <DataField>Phone_Number</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

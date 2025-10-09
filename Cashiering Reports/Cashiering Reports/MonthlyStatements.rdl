@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-16T23:01:23.1207636Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-09T15:36:00.7256858Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -86,6 +86,63 @@
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="Header">
+      <SharedDataSet>
+        <SharedDataSetReference>Header</SharedDataSetReference>
+        <QueryParameters>
+          <QueryParameter Name="@unitId">
+            <Value>=Parameters!unitId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BudgetNumber">
+          <DataField>BudgetNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_City">
+          <DataField>Address_City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_State">
+          <DataField>Address_State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_Street">
+          <DataField>Address_Street</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_ZipCode">
+          <DataField>Address_ZipCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Director_Name">
+          <DataField>Director_Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Director_Title">
+          <DataField>Director_Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone_Extension">
+          <DataField>Phone_Extension</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone_Number">
+          <DataField>Phone_Number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -98,7 +155,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>I, </Value>
+                    <Value>I</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontWeight>Normal</FontWeight>
@@ -108,7 +165,7 @@
                   </TextRun>
                   <TextRun>
                     <Label>Director Name</Label>
-                    <Value>=First(Fields!Director_Name.Value, "MonthlyStatements")</Value>
+                    <Value>=", " + First(Fields!Director_Name.Value, "Header")</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontWeight>Normal</FontWeight>
@@ -127,7 +184,7 @@
                   </TextRun>
                   <TextRun>
                     <Label>Director Title</Label>
-                    <Value>=First(Fields!Director_Title.Value, "MonthlyStatements")</Value>
+                    <Value>=First(Fields!Director_Title.Value, "Header")</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontWeight>Normal</FontWeight>
@@ -1203,21 +1260,12 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>I, </Value>
+                    <Value>I</Value>
                     <Style />
                   </TextRun>
                   <TextRun>
                     <Label>Director Name</Label>
-                    <Value>=First(Fields!Director_Name.Value, "MonthlyStatements")</Value>
-                    <Style>
-                      <FontStyle>Normal</FontStyle>
-                      <FontWeight>Normal</FontWeight>
-                      <TextDecoration>None</TextDecoration>
-                      <Color>#000000</Color>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value>, </Value>
+                    <Value>=", " + First(Fields!Director_Name.Value, "Header")</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontWeight>Normal</FontWeight>
@@ -1227,7 +1275,7 @@
                   </TextRun>
                   <TextRun>
                     <Label>Director Title</Label>
-                    <Value>=First(Fields!Director_Title.Value, "MonthlyStatements")</Value>
+                    <Value>=", " + First(Fields!Director_Title.Value, "Header")</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontWeight>Normal</FontWeight>
@@ -1432,7 +1480,7 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Dept Name</Label>
-                      <Value>=First(Fields!Name.Value, "MonthlyStatements")</Value>
+                      <Value>=First(Fields!Name.Value, "Header")</Value>
                       <Style>
                         <FontSize>18pt</FontSize>
                         <FontWeight>Bold</FontWeight>

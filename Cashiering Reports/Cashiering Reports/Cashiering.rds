@@ -5,5 +5,5 @@
     <ConnectString>Data Source=DBSINTWEBDEV;Initial Catalog=Cashiering;Encrypt=False;TrustServerCertificate=True</ConnectString>
     <IntegratedSecurity>true</IntegratedSecurity>
   </ConnectionProperties>
-  <DataSourceID>2dc28053-d050-46a3-89f2-5b57eca01814</DataSourceID>
+  <DataSourceID>1d0fdc26-0f17-423a-959b-70295639fac2</DataSourceID>
 </RptDataSource>

@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-09-26T20:09:41.7589205Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-07T16:11:48.0548371Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -25,26 +25,25 @@
       <SharedDataSet>
         <SharedDataSetReference>ProjectDetail</SharedDataSetReference>
         <QueryParameters>
+          <QueryParameter Name="@unitId">
+            <Value>=Parameters!unitId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
           <QueryParameter Name="@startDate">
             <Value>=Parameters!startDate.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="@endDate">
             <Value>=Parameters!endDate.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
           <QueryParameter Name="@projectId">
             <Value>=Parameters!projectId.Value</Value>
-          </QueryParameter>
-          <QueryParameter Name="@unitId">
-            <Value>=Parameters!unitId.Value</Value>
             <rd:UserDefined>true</rd:UserDefined>
           </QueryParameter>
         </QueryParameters>
       </SharedDataSet>
       <Fields>
-        <Field Name="FundId">
-          <DataField>FundId</DataField>
-          <rd:TypeName>System.Guid</rd:TypeName>
-        </Field>
         <Field Name="FundNumber">
           <DataField>FundNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -59,23 +58,11 @@
         </Field>
         <Field Name="Amount">
           <DataField>Amount</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="TransactionDate">
           <DataField>TransactionDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="InvoiceNumber">
-          <DataField>InvoiceNumber</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="EffectiveDate">
-          <DataField>EffectiveDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="VersionSetId">
-          <DataField>VersionSetId</DataField>
-          <rd:TypeName>System.Guid</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>
@@ -553,7 +540,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Label>ProjectId</Label>
+                                  <Label>Fund Number</Label>
                                   <Value>=Fields!FundNumber.Value</Value>
                                   <Style />
                                 </TextRun>
@@ -835,11 +822,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Project Id:  </Value>
-                      <Style />
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!projectId.Value</Value>
+                      <Value>Project Id:  N/A</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -850,11 +833,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Unit Id: </Value>
-                      <Style />
-                    </TextRun>
-                    <TextRun>
-                      <Value>=Parameters!unitId.Value</Value>
+                      <Value>Unit Id: N/A</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -1050,9 +1029,13 @@
     </ReportSection>
   </ReportSections>
   <ReportParameters>
+    <ReportParameter Name="unitId">
+      <DataType>String</DataType>
+      <Prompt>Unit Id</Prompt>
+    </ReportParameter>
     <ReportParameter Name="startDate">
       <DataType>DateTime</DataType>
-      <Prompt>Start Date:</Prompt>
+      <Prompt>Start Date: </Prompt>
     </ReportParameter>
     <ReportParameter Name="endDate">
       <DataType>DateTime</DataType>
@@ -1061,10 +1044,6 @@
     <ReportParameter Name="projectId">
       <DataType>String</DataType>
       <Prompt>Project Id:</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="unitId">
-      <DataType>String</DataType>
-      <Prompt>Unit ID:</Prompt>
     </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
@@ -1075,22 +1054,22 @@
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>startDate</ParameterName>
+          <ParameterName>unitId</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>endDate</ParameterName>
+          <ParameterName>startDate</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>projectId</ParameterName>
+          <ParameterName>endDate</ParameterName>
         </CellDefinition>
         <CellDefinition>
           <ColumnIndex>3</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>unitId</ParameterName>
+          <ParameterName>projectId</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

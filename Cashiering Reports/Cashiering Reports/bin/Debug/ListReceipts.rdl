@@ -7,9 +7,9 @@
     </am:CreatedBy>
     <am:UpdatedBy>
       <am:Name>SSDTRS</am:Name>
-      <am:Version>17.14.36414.22</am:Version>
+      <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-08-28T22:22:53.4237155Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-09T16:00:33.0359654Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -110,6 +110,63 @@
         </Field>
         <Field Name="Address_ZipCode">
           <DataField>Address_ZipCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone_Extension">
+          <DataField>Phone_Extension</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone_Number">
+          <DataField>Phone_Number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Header">
+      <SharedDataSet>
+        <SharedDataSetReference>Header</SharedDataSetReference>
+        <QueryParameters>
+          <QueryParameter Name="@unitId">
+            <Value>=Parameters!unitId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BudgetNumber">
+          <DataField>BudgetNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_City">
+          <DataField>Address_City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_State">
+          <DataField>Address_State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_Street">
+          <DataField>Address_Street</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_ZipCode">
+          <DataField>Address_ZipCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Director_Name">
+          <DataField>Director_Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Director_Title">
+          <DataField>Director_Title</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Phone_Extension">
@@ -1442,7 +1499,7 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Dept Name</Label>
-                      <Value>=First(Fields!Name.Value, "ListReceipts")</Value>
+                      <Value>=First(Fields!Name.Value, "Header")</Value>
                       <Style>
                         <FontSize>18pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -1493,7 +1550,7 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Address_Street</Label>
-                      <Value>=First(Fields!Address_Street.Value, "ListReceipts")</Value>
+                      <Value>=First(Fields!Address_Street.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -1507,21 +1564,20 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Address_City</Label>
-                      <Value>=First(Fields!Address_City.Value, "ListReceipts")</Value>
+                      <Value>=First(Fields!Address_City.Value, "Header") + ","</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
                     </TextRun>
                     <TextRun>
-                      <Value>,</Value>
+                      <Value xml:space="preserve"> </Value>
                       <Style>
-                        <FontFamily>Lucida Console</FontFamily>
                         <FontSize>12pt</FontSize>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Label>Address_State</Label>
-                      <Value>=First(Fields!Address_State.Value, "ListReceipts")</Value>
+                      <Value>=First(Fields!Address_State.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -1534,7 +1590,7 @@
                     </TextRun>
                     <TextRun>
                       <Label>Address_ZipCode</Label>
-                      <Value>=First(Fields!Address_ZipCode.Value, "ListReceipts")</Value>
+                      <Value>=First(Fields!Address_ZipCode.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -1548,7 +1604,7 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Phone_Number</Label>
-                      <Value>=FIRST("(" + Left(Fields!Phone_Number.Value,3) + ") " + Mid(Fields!Phone_Number.Value,4,3) + "-" + Right(Fields!Phone_Number.Value,4), "ListReceipts")</Value>
+                      <Value>=FIRST("(" + Left(Fields!Phone_Number.Value,3) + ") " + Mid(Fields!Phone_Number.Value,4,3) + "-" + Right(Fields!Phone_Number.Value,4), "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -1561,7 +1617,7 @@
                     </TextRun>
                     <TextRun>
                       <Label>Phone_Extension</Label>
-                      <Value>=FIRST(Fields!Phone_Extension.Value, "ListReceipts")</Value>
+                      <Value>=FIRST(Fields!Phone_Extension.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>

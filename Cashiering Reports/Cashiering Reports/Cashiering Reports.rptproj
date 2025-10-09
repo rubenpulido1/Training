@@ -54,6 +54,7 @@
     <DataSet Include="DepositPermit.rsd" />
     <DataSet Include="FeeDescription.rsd" />
     <DataSet Include="FeeDistributions.rsd" />
+    <DataSet Include="Header.rsd" />
     <DataSet Include="ListReceipts.rsd" />
     <DataSet Include="MonthlyStatements.rsd" />
     <DataSet Include="OverShortageAdj.rsd" />
@@ -63,7 +64,7 @@
     <DataSet Include="ProjectsSummary.rsd" />
     <DataSet Include="ReprintReceipts.rsd" />
     <DataSet Include="TotalDue.rsd" />
-    <DataSet Include="TransactionByPayee.rsd" />
+    <DataSet Include="TransactionsByPayee.rsd" />
     <DataSet Include="VoidedReceipts.rsd" />
   </ItemGroup>
   <ItemGroup>
