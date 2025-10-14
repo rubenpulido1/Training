@@ -26,10 +26,11 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Units.Id, Units.CreatedAt, Certificates.CertificateName, Certificates.CertificateNumber, Fees.Description, Certificates.CreatedBy, Transactions.VoidedStatus_VoidedOn, Transactions.VoidedStatus_VoidedBy, 
+      <CommandText>SELECT        Units.Id, Certificates.CertificateName, Certificates.CertificateNumber, Fees.Description, Certificates.CreatedBy, Transactions.VoidedStatus_VoidedOn, Transactions.VoidedStatus_VoidedBy, 
                          Certificates.DamagedCertificate_Reason, Certificates.DamagedCertificate_Date, Certificates.DamagedCertificate_DamagedByUserId, Users.FirstName, Users.LastName, Transactions.InvoiceNumber, 
                          Transactions.VoidedStatus_Comments, Users_1.FirstName AS Voided_FirstName, Users_1.LastName AS Voided_LastName, Users_2.FirstName AS Damaged_FirstName, Users_2.LastName AS Damaged_LastName, 
-                         Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number
+                         Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number, 
+                         Certificates.CreatedAt
 FROM            Units INNER JOIN
                          Certificates ON Units.Id = Certificates.UnitId INNER JOIN
                          Fees ON Units.Id = Fees.UnitId AND Certificates.FeeId = Fees.Id INNER JOIN
@@ -38,16 +39,13 @@ FROM            Units INNER JOIN
                          Users ON Certificates.CreatedBy = Users.Id INNER JOIN
                          Departments ON Units.DepartmentId = Departments.Id AND Users.DepartmentId = Departments.Id LEFT OUTER JOIN
                          Users AS Users_1 ON Departments.Id = Users_1.DepartmentId AND Transactions.VoidedStatus_VoidedBy = Users_1.Id LEFT OUTER JOIN
-                         Users AS Users_2 ON Departments.Id = Users_2.DepartmentId AND Certificates.DamagedCertificate_DamagedByUserId = Users_2.Id</CommandText>
+                         Users AS Users_2 ON Departments.Id = Users_2.DepartmentId AND Certificates.DamagedCertificate_DamagedByUserId = Users_2.Id
+WHERE        (Certificates.CreatedAt BETWEEN @startDate AND @endDate) AND (Certificates.UnitId = @unitId)</CommandText>
     </Query>
     <Fields>
       <Field Name="Id">
         <DataField>Id</DataField>
         <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="CreatedAt">
-        <DataField>CreatedAt</DataField>
-        <rd:TypeName>System.DateTime</rd:TypeName>
       </Field>
       <Field Name="CertificateName">
         <DataField>CertificateName</DataField>
@@ -144,6 +142,10 @@ FROM            Units INNER JOIN
       <Field Name="Phone_Number">
         <DataField>Phone_Number</DataField>
         <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CreatedAt">
+        <DataField>CreatedAt</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>

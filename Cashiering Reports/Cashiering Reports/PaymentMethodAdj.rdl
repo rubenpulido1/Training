@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-09T23:45:41.4343373Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-14T15:51:22.4902364Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -870,7 +870,6 @@
                 <TablixMember>
                   <KeepWithGroup>After</KeepWithGroup>
                   <RepeatOnNewPage>true</RepeatOnNewPage>
-                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
@@ -1136,23 +1135,29 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Payment Method Adjustments for </Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
                     </TextRun>
                     <TextRun>
                       <Label>@startDate</Label>
                       <Value>=Format(Parameters!startDate.Value, "MM/dd/yyyy")</Value>
                       <Style>
+                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Value> to </Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
                     </TextRun>
                     <TextRun>
                       <Label>@endDate</Label>
                       <Value>=Format(Parameters!endDate.Value, "MM/dd/yyyy")</Value>
                       <Style>
+                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>

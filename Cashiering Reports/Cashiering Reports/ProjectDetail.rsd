@@ -41,12 +41,12 @@ FROM            Transactions t INNER JOIN
                          FeeDistributions fd ON li.FeeId = fd.FeeId INNER JOIN
                          Funds f ON fd.FundId = f.Id INNER JOIN
                          Funds f2 ON f.VersionSetId = f2.VersionSetId
-WHERE        t .UnitId = @unitId AND t .TransactionDate &gt;= @startDate AND t .TransactionDate &lt;= @endDate AND t .VoidedStatus_VoidedOn IS NULL AND 
-                         f.ProjectId = @projectId  AND f2.EffectiveDate &lt;= CAST(t .TransactionDate AS DATE) AND (f2.EffectiveEndDate IS NULL OR
+WHERE        t .UnitId = @unitId AND t .TransactionDate &gt;= @startDate AND t .TransactionDate &lt;= @endDate AND t .VoidedStatus_VoidedOn IS NULL AND f.ProjectId = @projectId AND f2.EffectiveDate &lt;= CAST(t .TransactionDate AS DATE) AND
+                          (f2.EffectiveEndDate IS NULL OR
                          f2.EffectiveEndDate &gt; CAST(t .TransactionDate AS DATE)) /* Only temporal logic on fd (the fee distribution version)*/ AND fd.EffectiveDate &lt;= CAST(t .TransactionDate AS DATE) AND (fd.EffectiveEndDate IS NULL OR
                          fd.EffectiveEndDate &gt; CAST(t .TransactionDate AS DATE)))
-    SELECT        FundNumber, BudgetNumber, AccountNumber,  CASE WHEN IsPercentage = 1 THEN FORMAT(ROUND(LineItemAmount * (DistributionAmount / 100.0), 2), '0.00') 
-                              ELSE FORMAT(DistributionAmount, '0.00') END AS Amount, TransactionDate
+    SELECT        FundNumber, BudgetNumber, AccountNumber, CASE WHEN IsPercentage = 1 THEN FORMAT(ROUND(LineItemAmount * (DistributionAmount / 100.0), 2), '0.00') ELSE FORMAT(DistributionAmount, '0.00') END AS Amount, 
+                              TransactionDate, InvoiceNumber
      FROM            FundVersions
      WHERE        FundRank = 1
      ORDER BY TransactionDate DESC, InvoiceNumber;</CommandText>
@@ -71,6 +71,10 @@ WHERE        t .UnitId = @unitId AND t .TransactionDate &gt;= @startDate AND t .
       <Field Name="TransactionDate">
         <DataField>TransactionDate</DataField>
         <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="InvoiceNumber">
+        <DataField>InvoiceNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>

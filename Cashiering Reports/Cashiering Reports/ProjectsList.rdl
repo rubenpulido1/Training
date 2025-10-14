@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-09T15:15:54.9475456Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-14T15:47:37.0320208Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -57,6 +57,12 @@
     <DataSet Name="Header">
       <SharedDataSet>
         <SharedDataSetReference>Header</SharedDataSetReference>
+        <QueryParameters>
+          <QueryParameter Name="@unitId">
+            <Value>=Parameters!unitId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
       </SharedDataSet>
       <Fields>
         <Field Name="Description">
@@ -398,12 +404,54 @@
             <Left>1.25in</Left>
             <Height>1.03124in</Height>
             <Width>6.00001in</Width>
+            <Visibility>
+              <Hidden>=CountRows() = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
             </Style>
           </Tablix>
+          <Textbox Name="Textbox15">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>No projects found</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox3</rd:DefaultName>
+            <Top>1in</Top>
+            <Left>1.75in</Left>
+            <Height>1in</Height>
+            <Width>5in</Width>
+            <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=IIF(CountRows("ProjectsList") &gt; 0, True, False)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>7in</Height>
         <Style />
@@ -411,7 +459,7 @@
       <Width>8.5in</Width>
       <Page>
         <PageHeader>
-          <Height>2in</Height>
+          <Height>2.25in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -480,7 +528,7 @@
                 </Border>
               </Style>
             </Image>
-            <Textbox Name="Textbox4">
+            <Textbox Name="Textbox5">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -488,7 +536,75 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Address_Street</Label>
-                      <Value />
+                      <Value>=First(Fields!Address_Street.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Address_City</Label>
+                      <Value>=First(Fields!Address_City.Value, "Header") + ","</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>Address_State</Label>
+                      <Value>=First(Fields!Address_State.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Address_ZipCode</Label>
+                      <Value>=First(Fields!Address_ZipCode.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Phone_Number</Label>
+                      <Value>=First("(" + Left(Fields!Phone_Number.Value, 3) + ") " + Mid(Fields!Phone_Number.Value, 4, 3) + "-" + Right(Fields!Phone_Number.Value, 4), "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> ext </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>Phone_Extension</Label>
+                      <Value>=First(Fields!Phone_Extension.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -505,6 +621,7 @@
                       <Value>Projects By Budget Number</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
+                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -515,9 +632,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.8in</Top>
-              <Left>2.5in</Left>
-              <Height>0.9in</Height>
-              <Width>3.5in</Width>
+              <Left>2.25in</Left>
+              <Height>1.2in</Height>
+              <Width>4in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

@@ -888,6 +888,9 @@
             <Left>0.75in</Left>
             <Height>1.49999in</Height>
             <Width>6.99999in</Width>
+            <Visibility>
+              <Hidden>=CountRows() = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
