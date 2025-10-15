@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-10T15:42:43.4923882Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-14T16:27:15.4187222Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -1238,6 +1238,7 @@
                     <TablixMember />
                     <TablixMember />
                   </TablixMembers>
+                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
@@ -1318,7 +1319,43 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Swear that the foregoing statement of cash collected, paid, and held by me or under my control for the month of Jan 2010 and of other matters is complete, true, and correct.</Value>
+                    <Value>Swear that the foregoing statement of cash collected, paid, and held by me or under my control for the dates from </Value>
+                    <Style>
+                      <FontStyle>Normal</FontStyle>
+                      <FontWeight>Normal</FontWeight>
+                      <TextDecoration>None</TextDecoration>
+                      <Color>#000000</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!startDate.Value</Value>
+                    <Style>
+                      <FontStyle>Normal</FontStyle>
+                      <FontWeight>Normal</FontWeight>
+                      <TextDecoration>None</TextDecoration>
+                      <Color>#000000</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>  to </Value>
+                    <Style>
+                      <FontStyle>Normal</FontStyle>
+                      <FontWeight>Normal</FontWeight>
+                      <TextDecoration>None</TextDecoration>
+                      <Color>#000000</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!endDate.Value</Value>
+                    <Style>
+                      <FontStyle>Normal</FontStyle>
+                      <FontWeight>Normal</FontWeight>
+                      <TextDecoration>None</TextDecoration>
+                      <Color>#000000</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value> and of other matters is complete, true, and correct.</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontWeight>Normal</FontWeight>
@@ -1536,7 +1573,7 @@
       <Width>8.5in</Width>
       <Page>
         <PageHeader>
-          <Height>2in</Height>
+          <Height>2.25in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1605,7 +1642,7 @@
                 </Border>
               </Style>
             </Image>
-            <Textbox Name="Textbox4">
+            <Textbox Name="Textbox9">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -1613,7 +1650,7 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Address_Street</Label>
-                      <Value>Monthly Statement of Fees</Value>
+                      <Value>=First(Fields!Address_Street.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -1626,7 +1663,21 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>With Affidavit</Value>
+                      <Label>Address_City</Label>
+                      <Value>=First(Fields!Address_City.Value, "Header") + ","</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>Address_State</Label>
+                      <Value>=First(Fields!Address_State.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -1638,11 +1689,61 @@
                 </Paragraph>
                 <Paragraph>
                   <TextRuns>
+                    <TextRun>
+                      <Label>Address_ZipCode</Label>
+                      <Value>=First(Fields!Address_ZipCode.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Phone_Number</Label>
+                      <Value>=First("(" + Left(Fields!Phone_Number.Value, 3) + ") " + Mid(Fields!Phone_Number.Value, 4, 3) + "-" + Right(Fields!Phone_Number.Value, 4), "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> ext </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>Phone_Extension</Label>
+                      <Value>=First(Fields!Phone_Extension.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Address_Street</Label>
+                      <Value>Monthly Statement of Fees With Affidavit </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
+                    </TextRun>
                     <TextRun>
                       <Label>Date</Label>
                       <Value>=Format(Today(), "MM/dd/yyyy")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
+                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>
@@ -1654,9 +1755,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.8in</Top>
-              <Left>2.75in</Left>
+              <Left>2.25in</Left>
               <Height>1.2in</Height>
-              <Width>3in</Width>
+              <Width>4in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

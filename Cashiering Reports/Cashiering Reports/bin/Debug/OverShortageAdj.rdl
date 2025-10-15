@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-09T23:54:30.5770777Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-14T15:51:38.2256460Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -449,6 +449,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -635,6 +636,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -836,6 +838,7 @@
                           </Style>
                         </Textbox>
                         <ColSpan>5</ColSpan>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -860,7 +863,6 @@
                 <TablixMember>
                   <KeepWithGroup>After</KeepWithGroup>
                   <RepeatOnNewPage>true</RepeatOnNewPage>
-                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
@@ -967,7 +969,7 @@
       <Width>8.5in</Width>
       <Page>
         <PageHeader>
-          <Height>2in</Height>
+          <Height>2.25in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1126,23 +1128,29 @@
                   <TextRuns>
                     <TextRun>
                       <Value>Over-Short Adjustments for </Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
                     </TextRun>
                     <TextRun>
                       <Label>@startDate</Label>
                       <Value>=Format(Parameters!startDate.Value, "MM/dd/yyyy")</Value>
                       <Style>
+                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Value> to </Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
                     </TextRun>
                     <TextRun>
                       <Label>@endDate</Label>
                       <Value>=Format(Parameters!endDate.Value, "MM/dd/yyyy")</Value>
                       <Style>
+                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>
@@ -1154,9 +1162,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.8in</Top>
-              <Left>2.5in</Left>
+              <Left>2.25in</Left>
               <Height>1.2in</Height>
-              <Width>3.5in</Width>
+              <Width>4in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

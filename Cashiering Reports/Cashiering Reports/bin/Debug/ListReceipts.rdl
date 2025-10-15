@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-10T15:54:07.6540487Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-14T16:03:52.6427342Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -1549,7 +1549,7 @@
       <Width>8.5in</Width>
       <Page>
         <PageHeader>
-          <Height>2in</Height>
+          <Height>2.25in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1706,7 +1706,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Adjustments for </Value>
+                      <Value>Receipts for </Value>
                       <Style />
                     </TextRun>
                     <TextRun>
@@ -1733,9 +1733,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.8in</Top>
-              <Left>2.75in</Left>
+              <Left>2.25in</Left>
               <Height>1.2in</Height>
-              <Width>3in</Width>
+              <Width>4in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

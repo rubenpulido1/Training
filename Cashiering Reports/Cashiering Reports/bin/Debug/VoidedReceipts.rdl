@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-09T17:32:07.6686640Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-14T15:02:48.8079604Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -643,9 +643,11 @@
               <TablixMembers>
                 <TablixMember>
                   <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Details" />
+                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
@@ -747,18 +749,31 @@
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="textbox1">
+            <Image Name="CountyLogo">
+              <Source>Embedded</Source>
+              <Value>CountyLogo</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.2in</Top>
+              <Left>0.5in</Left>
+              <Height>1.5in</Height>
+              <Width>1.5in</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
+            <Textbox Name="ReportTitle">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Label>Department Name</Label>
-                      <Value>=First(Fields!Name.Value, "Header")</Value>
+                      <Value>COUNTY OF KINGS</Value>
                       <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
+                        <FontSize>20pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -769,11 +784,47 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
+                      <Label>Department_ Name</Label>
+                      <Value>=First(Fields!Name.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>18pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Left>2.95in</Left>
+              <Height>0.8in</Height>
+              <Width>2.6in</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <BottomBorder>
+                  <Style>None</Style>
+                </BottomBorder>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox5">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
                       <Label>Address_Street</Label>
                       <Value>=First(Fields!Address_Street.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -785,17 +836,15 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Address_City</Label>
-                      <Value>=First(Fields!Address_City.Value, "Header")  +  ","</Value>
+                      <Value>=First(Fields!Address_City.Value, "Header") + ","</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Value xml:space="preserve"> </Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
@@ -803,22 +852,19 @@
                       <Value>=First(Fields!Address_State.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Value xml:space="preserve"> </Value>
                       <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
+                        <FontFamily>Lucida Console</FontFamily>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Label>Address_ZipCode</Label>
-                      <Value>=First(Fields!Address_ZipCode.Value,  "Header")</Value>
+                      <Value>=First(Fields!Address_ZipCode.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -829,20 +875,16 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Label>Phone Number</Label>
-                      <Value>="(" + Left(First(Fields!Phone_Number.Value, "Header"), 3) + ") " + 
-Mid(First(Fields!Phone_Number.Value, "Header"), 4, 3) + "-" + 
-Right(First(Fields!Phone_Number.Value, "Header"), 4)</Value>
+                      <Label>Phone_Number</Label>
+                      <Value>=First("(" + Left(Fields!Phone_Number.Value, 3) + ") " + Mid(Fields!Phone_Number.Value, 4, 3) + "-" + Right(Fields!Phone_Number.Value, 4), "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Value> ext </Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                     <TextRun>
@@ -850,7 +892,6 @@ Right(First(Fields!Phone_Number.Value, "Header"), 4)</Value>
                       <Value>=First(Fields!Phone_Extension.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -895,26 +936,13 @@ Right(First(Fields!Phone_Number.Value, "Header"), 4)</Value>
                     <TextAlign>Center</TextAlign>
                   </Style>
                 </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontSize>12pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
-                        <Format>d</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
               </Paragraphs>
-              <rd:DefaultName>textbox1</rd:DefaultName>
-              <Left>1.75in</Left>
-              <Height>1.5in</Height>
-              <Width>5in</Width>
+              <rd:DefaultName>Textbox4</rd:DefaultName>
+              <Top>0.8in</Top>
+              <Left>2.25in</Left>
+              <Height>1.25in</Height>
+              <Width>4in</Width>
+              <ZIndex>2</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>

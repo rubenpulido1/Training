@@ -4,65 +4,91 @@
     <Query>
       <DataSourceReference>Cashiering</DataSourceReference>
       <DataSetParameters>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+        </DataSetParameter>
         <DataSetParameter Name="@startDate">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
-          <rd:DbType>DateTime</rd:DbType>
+          <rd:DbType>Object</rd:DbType>
         </DataSetParameter>
         <DataSetParameter Name="@endDate">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
-          <rd:DbType>DateTime</rd:DbType>
-        </DataSetParameter>
-        <DataSetParameter Name="@unitId">
-          <ReadOnly>false</ReadOnly>
-          <Nullable>false</Nullable>
-          <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
-          <rd:DbType>String</rd:DbType>
+          <rd:DbType>Object</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Projects.ProjectNumber, Projects.Description, Funds.UnitId, Funds.ProjectId, Funds.FundNumber, Funds.Id, FeeDistributions.FundId, FeeDistributions.FeeId, FeeDistributions.Amount
-FROM            Projects INNER JOIN
-                         Funds ON Projects.VersionSetId = Funds.ProjectId INNER JOIN
-                         FeeDistributions ON Funds.Id = FeeDistributions.FundId</CommandText>
+      <CommandText>WITH FundVersions AS (
+    SELECT
+        f2.ProjectId,
+        p.ProjectNumber,
+        p.Description AS ProjectName,
+        li.Amount AS LineItemAmount,
+        fd.Amount AS DistributionAmount,
+        fd.Percentage AS IsPercentage,
+        ROW_NUMBER() OVER (
+            PARTITION BY li.Id, f2.VersionSetId
+            ORDER BY f2.EffectiveDate DESC
+        ) AS FundRank
+    FROM Transactions t
+    INNER JOIN Transactions_LineItems li ON t.Id = li.TransactionId
+    INNER JOIN FeeDistributions fd ON li.FeeId = fd.FeeId
+    INNER JOIN Funds f ON fd.FundId = f.Id
+    INNER JOIN Funds f2 ON f.VersionSetId = f2.VersionSetId
+    INNER JOIN Projects p ON f2.ProjectId = p.Id
+    WHERE
+        t.UnitId = @unitId AND
+        t.TransactionDate BETWEEN @startDate AND @endDate AND
+        t.VoidedStatus_VoidedOn IS NULL AND
+        f2.ProjectId IS NOT NULL AND
+        f2.EffectiveDate &lt;= CAST(t.TransactionDate AS DATE) AND
+        (f2.EffectiveEndDate IS NULL OR f2.EffectiveEndDate &gt; CAST(t.TransactionDate AS DATE)) AND
+        fd.EffectiveDate &lt;= CAST(t.TransactionDate AS DATE) AND
+        (fd.EffectiveEndDate IS NULL OR fd.EffectiveEndDate &gt; CAST(t.TransactionDate AS DATE))
+),
+CalculatedAmounts AS (
+    SELECT
+        ProjectId,
+        ProjectNumber,
+        ProjectName,
+        CASE
+            WHEN IsPercentage = 1 THEN ROUND(LineItemAmount * (DistributionAmount / 100.0), 2)
+            ELSE DistributionAmount
+        END AS AllocatedAmount
+    FROM FundVersions
+    WHERE FundRank = 1
+),
+ProjectTotals AS (
+    SELECT
+        ProjectId,
+        ProjectNumber,
+        ProjectName,
+        SUM(CAST(AllocatedAmount AS DECIMAL(10, 2))) AS TotalAmount
+    FROM CalculatedAmounts
+    GROUP BY ProjectId, ProjectNumber, ProjectName
+)
+SELECT
+    p.ProjectNumber,
+    p.Description AS ProjectName,
+    ISNULL(pt.TotalAmount, 0) AS Amount
+FROM Projects p
+LEFT JOIN ProjectTotals pt ON p.Id = pt.ProjectId
+ORDER BY p.ProjectNumber;
+</CommandText>
     </Query>
     <Fields>
       <Field Name="ProjectNumber">
         <DataField>ProjectNumber</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
-      <Field Name="Description">
-        <DataField>Description</DataField>
+      <Field Name="ProjectName">
+        <DataField>ProjectName</DataField>
         <rd:TypeName>System.String</rd:TypeName>
-      </Field>
-      <Field Name="UnitId">
-        <DataField>UnitId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="ProjectId">
-        <DataField>ProjectId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="FundNumber">
-        <DataField>FundNumber</DataField>
-        <rd:TypeName>System.String</rd:TypeName>
-      </Field>
-      <Field Name="Id">
-        <DataField>Id</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="FundId">
-        <DataField>FundId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="FeeId">
-        <DataField>FeeId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
       </Field>
       <Field Name="Amount">
         <DataField>Amount</DataField>
