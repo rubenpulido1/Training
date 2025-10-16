@@ -4,6 +4,13 @@
     <Query>
       <DataSourceReference>Cashiering</DataSourceReference>
       <DataSetParameters>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
         <DataSetParameter Name="@startDate">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
@@ -16,29 +23,65 @@
           <OmitFromQuery>false</OmitFromQuery>
           <rd:DbType>Object</rd:DbType>
         </DataSetParameter>
-        <DataSetParameter Name="@unitId">
-          <ReadOnly>false</ReadOnly>
-          <Nullable>false</Nullable>
-          <OmitFromQuery>false</OmitFromQuery>
-          <rd:DbType>Object</rd:DbType>
-        </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Id, Description, CreatedAt
-FROM            Units
-WHERE        (CreatedAt BETWEEN @startDate AND @endDate) AND (Id = @unitId)</CommandText>
+      <CommandText>SELECT        Groups.Description, Fees.Description AS FeeDescription, FeeInputTypes.Type, SUM(FeeDistributions.Amount) AS Amount, Funds.Description AS FundDescription, Funds.FundNumber, Funds.BudgetNumber, 
+                         Funds.AccountNumber, Projects.ProjectNumber, Groups.UnitId, FeeDistributions.VersionSetId
+FROM            Groups INNER JOIN
+                         FeeGroup ON Groups.Id = FeeGroup.GroupsId LEFT OUTER JOIN
+                         Fees ON FeeGroup.FeesId = Fees.Id LEFT OUTER JOIN
+                         FeeInputTypes ON Fees.InputTypeId = FeeInputTypes.Id LEFT OUTER JOIN
+                         FeeDistributions ON Fees.Id = FeeDistributions.FeeId LEFT OUTER JOIN
+                         Funds ON FeeDistributions.FundId = Funds.Id LEFT OUTER JOIN
+                         Projects ON Funds.Id = Projects.Id
+WHERE        (Groups.UnitId = @unitId) AND (FeeDistributions.CreatedAt BETWEEN @startDate AND @endDate)
+GROUP BY Groups.Description, Fees.Description, FeeInputTypes.Type, FeeDistributions.Amount, Funds.Description, Funds.FundNumber, Funds.BudgetNumber, Funds.AccountNumber, Projects.ProjectNumber, Groups.UnitId, 
+                         FeeDistributions.VersionSetId
+ORDER BY FeeDistributions.VersionSetId</CommandText>
     </Query>
     <Fields>
-      <Field Name="Id">
-        <DataField>Id</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
       <Field Name="Description">
         <DataField>Description</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
-      <Field Name="CreatedAt">
-        <DataField>CreatedAt</DataField>
-        <rd:TypeName>System.DateTime</rd:TypeName>
+      <Field Name="FeeDescription">
+        <DataField>FeeDescription</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Type">
+        <DataField>Type</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="FundDescription">
+        <DataField>FundDescription</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FundNumber">
+        <DataField>FundNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="BudgetNumber">
+        <DataField>BudgetNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="AccountNumber">
+        <DataField>AccountNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ProjectNumber">
+        <DataField>ProjectNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="UnitId">
+        <DataField>UnitId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
+      </Field>
+      <Field Name="VersionSetId">
+        <DataField>VersionSetId</DataField>
+        <rd:TypeName>System.Guid</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>

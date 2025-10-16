@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-14T15:03:39.5911057Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-16T21:57:16.5757150Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -705,7 +705,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>No Voided Receipts for </Value>
+                    <Value>No Transactions from </Value>
                     <Style>
                       <FontSize>14pt</FontSize>
                       <Color>Red</Color>
@@ -752,7 +752,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>1in</Top>
+            <Top>1.41194in</Top>
             <Left>1.75in</Left>
             <Height>1in</Height>
             <Width>5in</Width>
@@ -778,7 +778,7 @@
       <Width>8.5in</Width>
       <Page>
         <PageHeader>
-          <Height>2.25in</Height>
+          <Height>2in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -935,7 +935,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Transactions By Payee Name for </Value>
+                      <Value>Transactions By Payee from </Value>
                       <Style>
                         <FontWeight>SemiBold</FontWeight>
                       </Style>
@@ -948,7 +948,7 @@
                       </Style>
                     </TextRun>
                     <TextRun>
-                      <Value> To </Value>
+                      <Value> to </Value>
                       <Style>
                         <FontWeight>SemiBold</FontWeight>
                       </Style>
@@ -969,7 +969,7 @@
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.8in</Top>
               <Left>2.25in</Left>
-              <Height>1.25in</Height>
+              <Height>1in</Height>
               <Width>4in</Width>
               <ZIndex>2</ZIndex>
               <Style>

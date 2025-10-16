@@ -9,7 +9,7 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-14T15:51:38.2256460Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-16T21:53:42.2366090Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -449,7 +449,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -636,7 +635,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -838,7 +836,6 @@
                           </Style>
                         </Textbox>
                         <ColSpan>5</ColSpan>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
@@ -876,7 +873,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>OverShortageAdj</DataSetName>
-            <Top>0.01389in</Top>
+            <Top>0.25in</Top>
             <Left>0.75in</Left>
             <Height>1.49999in</Height>
             <Width>7.00001in</Width>
@@ -896,7 +893,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>No adjustements found for the requested date range of </Value>
+                    <Value>No adjustements found for </Value>
                     <Style>
                       <FontSize>14pt</FontSize>
                       <Color>Red</Color>
@@ -943,7 +940,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>1in</Top>
+            <Top>1.81943in</Top>
             <Left>1.75in</Left>
             <Height>1in</Height>
             <Width>5in</Width>
@@ -969,7 +966,7 @@
       <Width>8.5in</Width>
       <Page>
         <PageHeader>
-          <Height>2.25in</Height>
+          <Height>2in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
