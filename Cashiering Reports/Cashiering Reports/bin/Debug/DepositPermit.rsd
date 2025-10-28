@@ -2,57 +2,201 @@
 <SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <DataSet Name="DataSet1">
     <Query>
-      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <DataSetParameters>
         <DataSetParameter Name="@date">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>DateTime</rd:DbType>
         </DataSetParameter>
         <DataSetParameter Name="@unitId">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
-        <DataSetParameter Name="@lessChange">
+        <DataSetParameter Name="@directDeposit">
           <ReadOnly>false</ReadOnly>
-          <Nullable>true</Nullable>
+          <Nullable>false</Nullable>
           <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
-          <rd:DbType>Int32</rd:DbType>
-        </DataSetParameter>
-        <DataSetParameter Name="@paymentOptionId">
-          <ReadOnly>false</ReadOnly>
-          <Nullable>true</Nullable>
-          <OmitFromQuery>false</OmitFromQuery>
-          <rd:UserDefined>true</rd:UserDefined>
-          <rd:DbType>String</rd:DbType>
+          <rd:DbType>Boolean</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        UnitId, InvoiceNumber, TransactionDate, Amount
-FROM            Transactions
-WHERE        (UnitId = @unitId) AND (CAST(TransactionDate AS DATE) = @date)</CommandText>
+      <CommandText>WITH TempFund AS (
+    SELECT 
+        CASE 
+            WHEN tli.ProjectComment IS NOT NULL AND LTRIM(RTRIM(tli.ProjectComment)) &lt;&gt; ''
+                THEN tli.ProjectComment
+            ELSE f2.Description
+        END AS FundDescription,
+        f2.FundNumber AS FundNbr,
+        f2.BudgetNumber AS FundDeptNbr,
+        f2.AccountNumber AS FundAccountNbr,
+        p.ProjectNumber AS ProjectNbr,
+        fd.Amount AS DistributionAmount,
+        tli.Amount AS LineItemAmount,
+        tli.Quantity,
+        fd.Percentage AS IsPercentage,
+        t.InvoiceNumber,
+        t.Amount AS TotalAmount,
+        CAST(t.TransactionDate AS DATE) AS TransactionDate,
+        0 AS IsAdjustment,
+        ROW_NUMBER() OVER (
+            PARTITION BY tli.Id, f2.VersionSetId
+            ORDER BY f2.EffectiveDate DESC
+        ) AS FundRank
+    FROM Transactions t
+    INNER JOIN Transactions_LineItems tli ON t.Id = tli.TransactionId
+    INNER JOIN FeeDistributions fd ON tli.FeeId = fd.FeeId
+    INNER JOIN Funds f ON fd.FundId = f.Id
+    INNER JOIN Funds f2 ON f.VersionSetId = f2.VersionSetId
+    LEFT JOIN Projects p ON f.ProjectId = p.Id
+        AND p.EffectiveDate &lt;= @date
+        AND (p.EffectiveEndDate IS NULL OR p.EffectiveEndDate &gt; @date)
+    WHERE 
+        t.VoidedStatus_VoidedOn IS NULL
+        AND t.UnitId = @unitId 
+        AND CAST(t.TransactionDate AS DATE) = @date
+        AND f2.EffectiveDate &lt;= @date
+        AND (f2.EffectiveEndDate IS NULL OR f2.EffectiveEndDate &gt;= @date)
+        AND fd.EffectiveDate &lt;= @date
+        AND (fd.EffectiveEndDate IS NULL OR fd.EffectiveEndDate &gt;= @date)
+        AND EXISTS (
+            SELECT 1 
+            FROM Transactions_Payments tp
+            INNER JOIN PaymentOptions po ON tp.PaymentOptionId = po.Id
+            WHERE tp.TransactionId = t.Id
+                AND (
+                    (@directDeposit = 1) OR 
+                    (po.PaymentMethod IN ('Cash', 'Check', 'Warrant', 'Credit Card', 'CA', 'CK', 'WAR', 'CC'))
+                )
+        )
+
+    UNION ALL
+
+
+    SELECT 
+        CASE 
+            WHEN tli.ProjectComment IS NOT NULL AND LTRIM(RTRIM(tli.ProjectComment)) &lt;&gt; ''
+                THEN tli.ProjectComment + ' - Adjustment'
+            ELSE f2.Description + ' - Adjustment'
+        END AS FundDescription,
+        f2.FundNumber AS FundNbr,
+        f2.BudgetNumber AS FundDeptNbr,
+        f2.AccountNumber AS FundAccountNbr,
+        COALESCE(adjProj.ProjectNumber, p.ProjectNumber) AS ProjectNbr,
+        fd.Amount AS DistributionAmount,
+        tli.Amount AS LineItemAmount,
+        tli.Quantity,
+        fd.Percentage AS IsPercentage,
+        t.InvoiceNumber,
+        osa.Amount AS TotalAmount,
+        osa.DepositDate AS TransactionDate,
+        1 AS IsAdjustment,
+        ROW_NUMBER() OVER (
+            PARTITION BY tli.Id, f2.VersionSetId
+            ORDER BY f2.EffectiveDate DESC
+        ) AS FundRank
+    FROM OverShortAdjustments osa
+    INNER JOIN Transactions t ON osa.TransactionId = t.Id
+    INNER JOIN Transactions_LineItems tli ON t.Id = tli.TransactionId
+    INNER JOIN FeeDistributions fd ON tli.FeeId = fd.FeeId
+    INNER JOIN Funds f ON fd.FundId = f.Id
+    INNER JOIN Funds f2 ON f.VersionSetId = f2.VersionSetId
+    LEFT JOIN Projects p ON f.ProjectId = p.Id
+        AND p.EffectiveDate &lt;= @date
+        AND (p.EffectiveEndDate IS NULL OR p.EffectiveEndDate &gt; @date)
+    LEFT JOIN Projects adjProj ON osa.ProjectId = adjProj.Id
+        AND adjProj.EffectiveDate &lt;= @date
+        AND (adjProj.EffectiveEndDate IS NULL OR adjProj.EffectiveEndDate &gt; @date)
+    INNER JOIN PaymentOptions po ON osa.PaymentOptionId = po.Id
+    WHERE 
+        osa.UnitId = @unitId 
+        AND osa.DepositDate = @date
+        AND f2.EffectiveDate &lt;= @date
+        AND (f2.EffectiveEndDate IS NULL OR f2.EffectiveEndDate &gt; @date)
+        AND fd.EffectiveDate &lt;= @date
+        AND (fd.EffectiveEndDate IS NULL OR fd.EffectiveEndDate &gt; @date)
+        AND (
+            (@directDeposit = 1) OR 
+            (po.PaymentMethod IN ('Cash', 'Check', 'Warrant', 'Credit Card', 'CA', 'CK', 'WAR', 'CC'))
+        )
+)
+SELECT 
+    FundDescription,
+    FundNbr,
+    FundDeptNbr,
+    FundAccountNbr,
+    ProjectNbr,
+    SUM(
+        ROUND(
+            CASE
+                WHEN IsPercentage = 1 THEN LineItemAmount * (DistributionAmount / 100.0)
+                ELSE DistributionAmount * ISNULL(Quantity, 1)
+            END,
+        2)
+    ) AS Amount,
+    InvoiceNumber,
+    MAX(TotalAmount) AS TotalAmount,
+    TransactionDate,
+    MAX(IsAdjustment) AS IsAdjustment
+FROM TempFund
+WHERE FundRank = 1
+GROUP BY 
+    FundDescription,
+    FundNbr,
+    FundDeptNbr,
+    FundAccountNbr,
+    ProjectNbr,
+    InvoiceNumber,
+    TransactionDate,
+    IsPercentage,
+    LineItemAmount,
+    DistributionAmount,
+    Quantity
+ORDER BY TransactionDate DESC, InvoiceNumber;</CommandText>
     </Query>
     <Fields>
-      <Field Name="UnitId">
-        <DataField>UnitId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
+      <Field Name="FundDescription">
+        <DataField>FundDescription</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FundNbr">
+        <DataField>FundNbr</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FundDeptNbr">
+        <DataField>FundDeptNbr</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="FundAccountNbr">
+        <DataField>FundAccountNbr</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="ProjectNbr">
+        <DataField>ProjectNbr</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
       </Field>
       <Field Name="InvoiceNumber">
         <DataField>InvoiceNumber</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
+      <Field Name="TotalAmount">
+        <DataField>TotalAmount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
       <Field Name="TransactionDate">
         <DataField>TransactionDate</DataField>
         <rd:TypeName>System.DateTime</rd:TypeName>
       </Field>
-      <Field Name="Amount">
-        <DataField>Amount</DataField>
-        <rd:TypeName>System.Decimal</rd:TypeName>
+      <Field Name="IsAdjustment">
+        <DataField>IsAdjustment</DataField>
+        <rd:TypeName>System.Int32</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>

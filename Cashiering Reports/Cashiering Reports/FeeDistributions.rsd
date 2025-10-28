@@ -2,7 +2,7 @@
 <SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <DataSet Name="DataSet1">
     <Query>
-      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <DataSetParameters>
         <DataSetParameter Name="@unitId">
           <ReadOnly>false</ReadOnly>
@@ -33,10 +33,11 @@ FROM            Groups INNER JOIN
                          FeeDistributions ON Fees.Id = FeeDistributions.FeeId LEFT OUTER JOIN
                          Funds ON FeeDistributions.FundId = Funds.Id LEFT OUTER JOIN
                          Projects ON Funds.Id = Projects.Id
-WHERE        (Groups.UnitId = @unitId) AND (FeeDistributions.CreatedAt BETWEEN @startDate AND @endDate)
+WHERE        (Groups.UnitId = @unitId) AND (FeeDistributions.EffectiveDate &lt;= @startDate) AND (FeeDistributions.EffectiveEndDate IS NULL OR
+                         FeeDistributions.EffectiveEndDate &gt; @endDate)
 GROUP BY Groups.Description, Fees.Description, FeeInputTypes.Type, FeeDistributions.Amount, Funds.Description, Funds.FundNumber, Funds.BudgetNumber, Funds.AccountNumber, Projects.ProjectNumber, Groups.UnitId, 
                          FeeDistributions.VersionSetId
-ORDER BY FeeDistributions.VersionSetId</CommandText>
+ORDER BY Groups.Description, FeeDescription</CommandText>
     </Query>
     <Fields>
       <Field Name="Description">

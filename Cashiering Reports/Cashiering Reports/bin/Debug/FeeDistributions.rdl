@@ -9,13 +9,13 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-16T21:51:14.1983327Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-28T17:38:16.3111411Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="Cashiering">
-      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>d1fd504f-3f91-4837-a584-5b13e6a135cf</rd:DataSourceID>
     </DataSource>
@@ -200,7 +200,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox3</rd:DefaultName>
-            <Top>1.92777in</Top>
+            <Top>2.5in</Top>
             <Left>1.75in</Left>
             <Height>1in</Height>
             <Width>5in</Width>
@@ -311,7 +311,7 @@
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <TextAlign>Center</TextAlign>
+                                <TextAlign>Left</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -1194,7 +1194,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.34375in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -1865,9 +1865,14 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>FeeDistributions</DataSetName>
+            <SortExpressions>
+              <SortExpression>
+                <Value>=Fields!FeeDescription.Value</Value>
+              </SortExpression>
+            </SortExpressions>
             <Top>0.3375in</Top>
             <Left>0.05in</Left>
-            <Height>1.52083in</Height>
+            <Height>1.61458in</Height>
             <Width>8.36458in</Width>
             <ZIndex>1</ZIndex>
             <Visibility>

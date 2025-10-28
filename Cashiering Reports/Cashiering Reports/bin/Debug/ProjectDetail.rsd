@@ -2,7 +2,7 @@
 <SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <DataSet Name="DataSet1">
     <Query>
-      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <DataSetParameters>
         <DataSetParameter Name="@unitId">
           <ReadOnly>false</ReadOnly>
@@ -33,27 +33,70 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>WITH FundVersions AS (SELECT        f2.Id AS FundId, f2.FundNumber, f2.BudgetNumber, f2.AccountNumber, li.Amount AS LineItemAmount, CAST(t .TransactionDate AS DATE) AS TransactionDate, t .InvoiceNumber, f2.EffectiveDate, 
-                                                                              f2.VersionSetId, li.Id AS LineItemId, fd.Amount AS DistributionAmount, fd.Percentage AS IsPercentage, ROW_NUMBER() OVER (PARTITION BY li.Id, f2.VersionSetId
-                                                    ORDER BY f2.EffectiveDate DESC) AS FundRank
-FROM            Transactions t INNER JOIN
-                         Transactions_LineItems li ON t .Id = li.TransactionId INNER JOIN
-                         FeeDistributions fd ON li.FeeId = fd.FeeId INNER JOIN
-                         Funds f ON fd.FundId = f.Id INNER JOIN
-                         Funds f2 ON f.VersionSetId = f2.VersionSetId
-WHERE        t .UnitId = @unitId AND t .TransactionDate &gt;= @startDate AND t .TransactionDate &lt;= @endDate AND t .VoidedStatus_VoidedOn IS NULL AND f.ProjectId = @projectId AND f2.EffectiveDate &lt;= CAST(t .TransactionDate AS DATE) AND
-                          (f2.EffectiveEndDate IS NULL OR
-                         f2.EffectiveEndDate &gt; CAST(t .TransactionDate AS DATE)) /* Only temporal logic on fd (the fee distribution version)*/ AND fd.EffectiveDate &lt;= CAST(t .TransactionDate AS DATE) AND (fd.EffectiveEndDate IS NULL OR
-                         fd.EffectiveEndDate &gt; CAST(t .TransactionDate AS DATE)))
-    SELECT        FundNumber, BudgetNumber, AccountNumber, CASE WHEN IsPercentage = 1 THEN FORMAT(ROUND(LineItemAmount * (DistributionAmount / 100.0), 2), '0.00') ELSE FORMAT(DistributionAmount, '0.00') END AS Amount, 
-                              TransactionDate, InvoiceNumber
-     FROM            FundVersions
-     WHERE        FundRank = 1
-     ORDER BY TransactionDate DESC, InvoiceNumber;</CommandText>
+      <CommandText>WITH FundVersions AS (
+    SELECT
+        p.ProjectNumber,
+        p.Description,
+        f2.FundNumber,
+        f2.BudgetNumber,
+        f2.AccountNumber,
+        li.Amount AS LineItemAmount,
+        CAST(t.TransactionDate AS DATE) AS TransactionDate,
+        t.InvoiceNumber,
+        fd.Amount AS DistributionAmount,
+        fd.Percentage AS IsPercentage,
+        ROW_NUMBER() OVER (
+            PARTITION BY li.Id, f2.VersionSetId
+            ORDER BY f2.EffectiveDate DESC
+        ) AS FundRank
+    FROM Transactions t
+    INNER JOIN Transactions_LineItems li ON t.Id = li.TransactionId
+    INNER JOIN FeeDistributions fd ON li.FeeId = fd.FeeId
+    INNER JOIN Funds f ON fd.FundId = f.Id
+    INNER JOIN Funds f2 ON f.VersionSetId = f2.VersionSetId
+    INNER JOIN Projects p ON f.ProjectId = p.Id
+    WHERE
+        t.UnitId = @unitId
+        AND t.TransactionDate BETWEEN @startDate AND @endDate
+        AND t.VoidedStatus_VoidedOn IS NULL
+        AND f.ProjectId = @projectId
+        AND f2.EffectiveDate &lt;= CAST(t.TransactionDate AS DATE)
+        AND (f2.EffectiveEndDate IS NULL OR f2.EffectiveEndDate &gt; CAST(t.TransactionDate AS DATE))
+        AND fd.EffectiveDate &lt;= CAST(t.TransactionDate AS DATE)
+        AND (fd.EffectiveEndDate IS NULL OR fd.EffectiveEndDate &gt; CAST(t.TransactionDate AS DATE))
+)
+SELECT
+    ProjectNumber,
+    Description,
+    FundNumber,
+    BudgetNumber,
+    AccountNumber,
+    FORMAT(
+        ROUND(
+            CASE
+                WHEN IsPercentage = 1 THEN LineItemAmount * (DistributionAmount / 100.0)
+                ELSE DistributionAmount
+            END,
+        2),
+        '0.00'
+    ) AS Amount,
+    TransactionDate,
+    InvoiceNumber
+FROM FundVersions
+WHERE FundRank = 1
+ORDER BY TransactionDate DESC, InvoiceNumber;</CommandText>
     </Query>
     <Fields>
+      <Field Name="ProjectNumber">
+        <DataField>ProjectNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
       <Field Name="FundNumber">
         <DataField>FundNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Description">
+        <DataField>Description</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="BudgetNumber">

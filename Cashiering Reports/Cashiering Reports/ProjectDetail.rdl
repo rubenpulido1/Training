@@ -9,13 +9,13 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-14T21:04:52.8191322Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-28T17:45:47.8454763Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="Cashiering">
-      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>d1fd504f-3f91-4837-a584-5b13e6a135cf</rd:DataSourceID>
     </DataSource>
@@ -44,12 +44,20 @@
         </QueryParameters>
       </SharedDataSet>
       <Fields>
+        <Field Name="ProjectNumber">
+          <DataField>ProjectNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="FundNumber">
           <DataField>FundNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="BudgetNumber">
           <DataField>BudgetNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Description">
+          <DataField>Description</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="AccountNumber">
@@ -70,6 +78,63 @@
         </Field>
       </Fields>
     </DataSet>
+    <DataSet Name="Header">
+      <SharedDataSet>
+        <SharedDataSetReference>Header</SharedDataSetReference>
+        <QueryParameters>
+          <QueryParameter Name="@unitId">
+            <Value>=Parameters!unitId.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+      </SharedDataSet>
+      <Fields>
+        <Field Name="Description">
+          <DataField>Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BudgetNumber">
+          <DataField>BudgetNumber</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_City">
+          <DataField>Address_City</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_State">
+          <DataField>Address_State</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_Street">
+          <DataField>Address_Street</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Address_ZipCode">
+          <DataField>Address_ZipCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Director_Name">
+          <DataField>Director_Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Director_Title">
+          <DataField>Director_Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone_Extension">
+          <DataField>Phone_Extension</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Phone_Number">
+          <DataField>Phone_Number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
   </DataSets>
   <ReportSections>
     <ReportSection>
@@ -79,27 +144,91 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.36087in</Width>
+                  <Width>1.31234in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>1.14197in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.46644in</Width>
+                  <Width>1.41791in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.525in</Width>
+                  <Width>1.41744in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.30625in</Width>
+                  <Width>1.41744in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.34144in</Width>
+                  <Width>1.29291in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.51562in</Height>
+                  <Height>0.28125in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox12">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ProjectNumber.Value</Value>
+                                  <Style>
+                                    <FontWeight>SemiBold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value> - </Value>
+                                  <Style>
+                                    <FontWeight>SemiBold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>=Fields!Description.Value</Value>
+                                  <Style>
+                                    <FontWeight>SemiBold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                              <Width>3pt</Width>
+                            </Border>
+                            <BottomBorder>
+                              <Width>3pt</Width>
+                            </BottomBorder>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>4pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>6</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.52256in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -172,6 +301,9 @@
                             <BottomBorder>
                               <Width>3pt</Width>
                             </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
                             <RightBorder>
                               <Style>None</Style>
                             </RightBorder>
@@ -365,7 +497,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.18229in</Height>
+                  <Height>0.18923in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -575,7 +707,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.51562in</Height>
+                  <Height>0.52256in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -821,6 +953,10 @@
                 <TablixMember>
                   <KeepWithGroup>After</KeepWithGroup>
                   <RepeatOnNewPage>true</RepeatOnNewPage>
+                </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                  <RepeatOnNewPage>true</RepeatOnNewPage>
                   <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
@@ -834,27 +970,117 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>ProjectDetail</DataSetName>
-            <Top>0.13889in</Top>
-            <Left>0.75in</Left>
-            <Height>1.21353in</Height>
-            <Width>8in</Width>
+            <Top>0.5in</Top>
+            <Left>0.25in</Left>
+            <Height>1.5156in</Height>
+            <Width>8.00001in</Width>
+            <Visibility>
+              <Hidden>=CountRows() = 0</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
             </Style>
           </Tablix>
+          <Textbox Name="Textbox10">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>No project details found for </Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!startDate.Value</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                      <Format>d</Format>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value xml:space="preserve"> </Value>
+                    <Style>
+                      <FontSize>12pt</FontSize>
+                      <FontWeight>SemiBold</FontWeight>
+                      <Format>d</Format>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>to </Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <Format>d</Format>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Parameters!endDate.Value</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <Format>d</Format>
+                      <Color>Red</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox3</rd:DefaultName>
+            <Top>2.5in</Top>
+            <Left>1.75in</Left>
+            <Height>1in</Height>
+            <Width>5in</Width>
+            <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=IIF(CountRows("ProjectDetail") &gt; 0, True, False)</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>7in</Height>
         <Style />
       </Body>
-      <Width>8.75in</Width>
+      <Width>8.5in</Width>
       <Page>
         <PageHeader>
-          <Height>2.25in</Height>
+          <Height>2in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
+            <Image Name="CountyLogo">
+              <Source>Embedded</Source>
+              <Value>CountyLogo</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.2in</Top>
+              <Left>0.75in</Left>
+              <Height>1.5in</Height>
+              <Width>1.5in</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
             <Textbox Name="ReportTitle">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -877,7 +1103,7 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Dept Name</Label>
-                      <Value />
+                      <Value>=First(Fields!Name.Value, "Header")</Value>
                       <Style>
                         <FontSize>18pt</FontSize>
                         <FontWeight>Bold</FontWeight>
@@ -892,6 +1118,7 @@
               <Left>2.95in</Left>
               <Height>0.8in</Height>
               <Width>2.6in</Width>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -905,21 +1132,6 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
-            <Image Name="CountyLogo">
-              <Source>Embedded</Source>
-              <Value>CountyLogo</Value>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.2in</Top>
-              <Left>0.75in</Left>
-              <Height>1.5in</Height>
-              <Width>1.5in</Width>
-              <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Image>
             <Textbox Name="Textbox4">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -928,7 +1140,7 @@
                   <TextRuns>
                     <TextRun>
                       <Label>Address_Street</Label>
-                      <Value />
+                      <Value>=First(Fields!Address_Street.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -941,41 +1153,98 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Project Id:  N/A</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Unit Id: N/A</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value />
+                      <Label>Address_City</Label>
+                      <Value>=First(Fields!Address_City.Value, "Header") + ","</Value>
                       <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>Address_State</Label>
+                      <Value>=First(Fields!Address_State.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Address_ZipCode</Label>
+                      <Value>=First(Fields!Address_ZipCode.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Label>Phone_Number</Label>
+                      <Value>=FIRST("(" + Left(Fields!Phone_Number.Value,3) + ") " + Mid(Fields!Phone_Number.Value,4,3) + "-" + Right(Fields!Phone_Number.Value,4), "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> ext </Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>Phone_Extension</Label>
+                      <Value>=First(Fields!Phone_Extension.Value, "Header")</Value>
+                      <Style>
+                        <FontSize>12pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Details from </Value>
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>@startDate</Label>
+                      <Value>=Format(Parameters!startDate.Value, "MM/dd/yyyy")</Value>
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
+                        <Format>d</Format>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value> to </Value>
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Label>@endDate</Label>
+                      <Value>=Format(Parameters!endDate.Value, "MM/dd/yyyy")</Value>
+                      <Style>
+                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>
@@ -987,9 +1256,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.8in</Top>
-              <Left>2.5in</Left>
+              <Left>2.25in</Left>
               <Height>1.2in</Height>
-              <Width>3.5in</Width>
+              <Width>4.11631in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

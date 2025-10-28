@@ -9,13 +9,13 @@
       <am:Name>SSDTRS</am:Name>
       <am:Version>17.14.36429.23</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-16T21:50:22.6266576Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2025-10-28T17:08:49.3012426Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="Cashiering">
-      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>dfc14c0e-ad68-4e2f-89df-8d58fea0d321</rd:DataSourceID>
     </DataSource>

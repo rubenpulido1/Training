@@ -2,7 +2,7 @@
 <SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <DataSet Name="DataSet1">
     <Query>
-      <DataSourceReference>Cashiering</DataSourceReference>
+      <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <DataSetParameters>
         <DataSetParameter Name="@unitId">
           <ReadOnly>false</ReadOnly>
@@ -78,8 +78,7 @@ SELECT
     ISNULL(pt.TotalAmount, 0) AS Amount
 FROM Projects p
 LEFT JOIN ProjectTotals pt ON p.Id = pt.ProjectId
-ORDER BY p.ProjectNumber;
-</CommandText>
+ORDER BY p.ProjectNumber;</CommandText>
     </Query>
     <Fields>
       <Field Name="ProjectNumber">
