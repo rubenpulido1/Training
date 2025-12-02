@@ -8,7 +8,7 @@
     <OverwriteDataSources>False</OverwriteDataSources>
     <TargetServerVersion>SSRS2016</TargetServerVersion>
     <Platform>Win32</Platform>
-    <TargetReportFolder>Cashiering</TargetReportFolder>
+    <TargetReportFolder>Applications/Cashiering</TargetReportFolder>
     <TargetDatasetFolder>Datasets/Cashiering</TargetDatasetFolder>
     <TargetDatasourceFolder>Data Sources/Cashiering</TargetDatasourceFolder>
     <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
