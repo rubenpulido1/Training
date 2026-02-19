@@ -4,18 +4,6 @@
     <Query>
       <DataSourceReference>Cashiering - Dev</DataSourceReference>
       <DataSetParameters>
-        <DataSetParameter Name="@unitId">
-          <ReadOnly>false</ReadOnly>
-          <Nullable>false</Nullable>
-          <OmitFromQuery>false</OmitFromQuery>
-          <rd:DbType>String</rd:DbType>
-        </DataSetParameter>
-        <DataSetParameter Name="@directDeposit">
-          <ReadOnly>false</ReadOnly>
-          <Nullable>false</Nullable>
-          <OmitFromQuery>false</OmitFromQuery>
-          <rd:DbType>Boolean</rd:DbType>
-        </DataSetParameter>
         <DataSetParameter Name="@date">
           <ReadOnly>false</ReadOnly>
           <Nullable>false</Nullable>
@@ -23,69 +11,59 @@
           <rd:UserDefined>true</rd:UserDefined>
           <rd:DbType>DateTime</rd:DbType>
         </DataSetParameter>
+        <DataSetParameter Name="@unitId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
+        <DataSetParameter Name="@paymentOptionId">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>false</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:UserDefined>true</rd:UserDefined>
+          <rd:DbType>String</rd:DbType>
+        </DataSetParameter>
       </DataSetParameters>
-      <CommandText>WITH PaymentTotals AS (
-    SELECT 
-        TransactionId,
-        SUM(Amount) AS TotalPayments
-    FROM Transactions_Payments
-    GROUP BY TransactionId
-),
-TotalPayments AS (
-    SELECT 
-        tp.PaymentOptionId, 
-        tp.Amount - (t.ChangeDue * (tp.Amount / NULLIF(pt.TotalPayments, 0))) AS Amount
-    FROM Transactions_Payments AS tp 
-    INNER JOIN Transactions AS t ON t.Id = tp.TransactionId
-    INNER JOIN PaymentTotals pt ON pt.TransactionId = t.Id
-    WHERE t.UnitId = @unitId
-        AND CAST(t.TransactionDate AS DATE) = @date
-        AND t.VoidedStatus_VoidedOn IS NULL
-    
-    UNION ALL
-    
-    SELECT 
-        osa.PaymentOptionId, 
-        osa.Amount
-    FROM OverShortAdjustments AS osa
-    WHERE osa.UnitId = @unitId
-        AND osa.DepositDate = @date
-    
-    UNION ALL
-    
-    SELECT 
-        pma.FromPaymentOptionId AS PaymentOptionId, 
-        -pma.Amount AS Amount
-    FROM PaymentMethodAdjustments AS pma
-    WHERE pma.UnitId = @unitId
-        AND pma.DepositDate = @date
-    
-    UNION ALL
-    
-    SELECT 
-        pma.ToPaymentOptionId AS PaymentOptionId, 
-        pma.Amount AS Amount
-    FROM PaymentMethodAdjustments AS pma
-    WHERE pma.UnitId = @unitId
-        AND pma.DepositDate = @date
-)
-SELECT 
-    po.PaymentMethod,
-    SUM(tp.Amount) AS Amount
-FROM TotalPayments AS tp 
-INNER JOIN PaymentOptions AS po ON po.Id = tp.PaymentOptionId
-WHERE (@directDeposit = 1) OR (po.PaymentMethod NOT IN ('Direct Deposit', 'DIR'))
-GROUP BY po.PaymentMethod
-ORDER BY po.PaymentMethod;</CommandText>
+      <CommandText>WITH PaymentTotals AS (SELECT        TransactionId, SUM(Amount) AS TotalPayments
+                                                       FROM            Transactions_Payments
+                                                       GROUP BY TransactionId), TotalPayments AS
+    (SELECT        tp.PaymentOptionId, tp.Amount - t.ChangeDue * (tp.Amount / NULLIF (pt.TotalPayments, 0)) AS Amount
+      FROM            Transactions_Payments AS tp INNER JOIN
+                                Transactions AS t ON t.Id = tp.TransactionId INNER JOIN
+                                PaymentTotals AS pt ON pt.TransactionId = t.Id
+      WHERE        (t.UnitId = @unitId) AND (CAST(t.TransactionDate AS DATE) = @date) AND (t.VoidedStatus_VoidedOn IS NULL)
+      UNION ALL
+      SELECT        PaymentOptionId, Amount
+      FROM            OverShortAdjustments AS osa
+      WHERE        (UnitId = @unitId) AND (DepositDate = @date)
+      UNION ALL
+      SELECT        FromPaymentOptionId AS PaymentOptionId, - Amount AS Amount
+      FROM            PaymentMethodAdjustments AS pma
+      WHERE        (UnitId = @unitId) AND (DepositDate = @date)
+      UNION ALL
+      SELECT        ToPaymentOptionId AS PaymentOptionId, Amount
+      FROM            PaymentMethodAdjustments AS pma
+      WHERE        (UnitId = @unitId) AND (DepositDate = @date))
+    SELECT        po.PaymentMethod, SUM(tp.Amount) AS Amount
+     FROM            TotalPayments AS tp INNER JOIN
+                              PaymentOptions AS po ON po.Id = tp.PaymentOptionId
+     WHERE po.Id IN (
+                    SELECT CAST(TRIM(value) AS UNIQUEIDENTIFIER)
+          FROM STRING_SPLIT(@paymentOptionId, ',')
+                )
+     GROUP BY po.PaymentMethod
+     ORDER BY po.PaymentMethod</CommandText>
     </Query>
     <Fields>
-      <Field Name="Amount">
-        <DataField>Amount</DataField>
-        <rd:TypeName>System.Decimal</rd:TypeName>
-      </Field>
       <Field Name="PaymentMethod">
         <DataField>PaymentMethod</DataField>
         <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
       </Field>
     </Fields>
   </DataSet>

@@ -7,9 +7,9 @@
     </am:CreatedBy>
     <am:UpdatedBy>
       <am:Name>SSDTRS</am:Name>
-      <am:Version>17.14.36429.23</am:Version>
+      <am:Version>17.14.36915.13</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-28T17:38:55.6315566Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2026-02-03T22:37:04.9958138Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -46,7 +46,7 @@
         </Field>
         <Field Name="TransactionDate">
           <DataField>TransactionDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VoidedStatus_VoidedOn">
           <DataField>VoidedStatus_VoidedOn</DataField>
@@ -1180,7 +1180,6 @@
                                   <Style>
                                     <FontSize>6pt</FontSize>
                                     <FontWeight>SemiBold</FontWeight>
-                                    <Format>d</Format>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>

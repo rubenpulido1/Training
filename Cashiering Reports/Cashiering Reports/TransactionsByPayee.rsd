@@ -23,17 +23,22 @@
           <rd:DbType>DateTime</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Transactions.InvoiceNumber, Transactions.Amount, Transactions.ChangeDue, STRING_AGG(Fees.Description, ', ') AS FeesDescription, Transactions.TransactionDate, Transactions.Payee_FirstName AS FirstName, 
-                         Transactions.Payee_LastName AS LastName, Transactions.Payee_MiddleName AS MiddleName, Units.Description, Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, 
-                         Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number
-FROM            Transactions INNER JOIN
-                         Transactions_LineItems ON Transactions.Id = Transactions_LineItems.TransactionId INNER JOIN
-                         Fees ON Transactions_LineItems.FeeId = Fees.Id INNER JOIN
-                         Units ON Transactions.UnitId = Units.Id INNER JOIN
-                         Departments ON Units.DepartmentId = Departments.Id
-WHERE        (Transactions.UnitId = @unitId) AND (Transactions.TransactionDate BETWEEN @startDate AND @endDate)
-GROUP BY Transactions.InvoiceNumber, Transactions.Amount, Transactions.ChangeDue, Transactions.TransactionDate, Transactions.Payee_FirstName, Transactions.Payee_LastName, Transactions.Payee_MiddleName, 
-                         Units.Description, Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number</CommandText>
+      <CommandText>SELECT
+  Transactions.InvoiceNumber, Fees.Description, Transactions.Amount AS TotalAmount, Transactions_LineItems.Amount, Transactions.ChangeDue,
+  Transactions.TransactionDate, Transactions.Payee_FirstName AS FirstName, Transactions.Payee_LastName AS LastName,
+  Transactions.Payee_MiddleName AS MiddleName, Departments.Name,
+  Departments.Address_City, Departments.Address_State, Departments.Address_Street,
+  Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number
+FROM
+  Transactions RIGHT JOIN
+  Transactions_LineItems ON Transactions.Id = Transactions_LineItems.TransactionId INNER JOIN
+  Fees ON Transactions_LineItems.FeeId = Fees.Id INNER JOIN
+  Units ON Transactions.UnitId = Units.Id INNER JOIN
+  Departments ON Units.DepartmentId = Departments.Id
+WHERE        
+  (Transactions.UnitId = @unitId) AND (Transactions.TransactionDate BETWEEN @startDate AND @endDate)
+
+ORDER BY InvoiceNumber</CommandText>
     </Query>
     <Fields>
       <Field Name="InvoiceNumber">
@@ -44,13 +49,13 @@ GROUP BY Transactions.InvoiceNumber, Transactions.Amount, Transactions.ChangeDue
         <DataField>Amount</DataField>
         <rd:TypeName>System.Decimal</rd:TypeName>
       </Field>
+      <Field Name="TotalAmount">
+        <DataField>TotalAmount</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
       <Field Name="ChangeDue">
         <DataField>ChangeDue</DataField>
         <rd:TypeName>System.Decimal</rd:TypeName>
-      </Field>
-      <Field Name="FeesDescription">
-        <DataField>FeesDescription</DataField>
-        <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="TransactionDate">
         <DataField>TransactionDate</DataField>

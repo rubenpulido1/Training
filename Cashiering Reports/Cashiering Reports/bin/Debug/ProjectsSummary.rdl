@@ -7,9 +7,9 @@
     </am:CreatedBy>
     <am:UpdatedBy>
       <am:Name>SSDTRS</am:Name>
-      <am:Version>17.14.36429.23</am:Version>
+      <am:Version>17.14.36915.13</am:Version>
     </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2025-10-28T17:50:12.1790452Z</am:LastModifiedTimestamp>
+    <am:LastModifiedTimestamp>2026-02-13T16:08:06.9561746Z</am:LastModifiedTimestamp>
   </am:AuthoringMetadata>
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
@@ -41,12 +41,12 @@
           <DataField>ProjectNumber</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ProjectName">
-          <DataField>ProjectName</DataField>
+        <Field Name="Description">
+          <DataField>Description</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Amount">
-          <DataField>Amount</DataField>
+        <Field Name="AllocatedAmount">
+          <DataField>AllocatedAmount</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -409,7 +409,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ProjectName">
+                        <Textbox Name="Description">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -417,7 +417,7 @@
                               <TextRuns>
                                 <TextRun>
                                   <Label>Description</Label>
-                                  <Value>=Fields!ProjectName.Value</Value>
+                                  <Value>=Fields!Description.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -426,7 +426,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ProjectName</rd:DefaultName>
+                          <rd:DefaultName>Description</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -448,14 +448,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Amount">
+                        <Textbox Name="AllocatedAmount">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Amount.Value</Value>
+                                  <Value>=Fields!AllocatedAmount.Value</Value>
                                   <Style>
                                     <FontFamily>Lucida Console</FontFamily>
                                     <Format>c</Format>
@@ -467,7 +467,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Amount</rd:DefaultName>
+                          <rd:DefaultName>AllocatedAmount</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -610,20 +610,6 @@
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Image Name="CountyLogo">
-              <Source>Embedded</Source>
-              <Value>CountyLogo</Value>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.2in</Top>
-              <Left>0.5in</Left>
-              <Height>1.5in</Height>
-              <Width>1.5in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Image>
             <Textbox Name="ReportTitle">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -658,10 +644,9 @@
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Left>2.95in</Left>
+              <Left>2.25in</Left>
               <Height>0.8in</Height>
               <Width>2.6in</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -675,6 +660,21 @@
                 <PaddingBottom>2pt</PaddingBottom>
               </Style>
             </Textbox>
+            <Image Name="CountyLogo">
+              <Source>Embedded</Source>
+              <Value>CountyLogo</Value>
+              <Sizing>FitProportional</Sizing>
+              <Top>0.2in</Top>
+              <Left>0.75in</Left>
+              <Height>1.5in</Height>
+              <Width>1.5in</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+            </Image>
             <Textbox Name="Textbox4">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
@@ -715,13 +715,12 @@
                         <FontSize>12pt</FontSize>
                       </Style>
                     </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-                <Paragraph>
-                  <TextRuns>
+                    <TextRun>
+                      <Value xml:space="preserve"> </Value>
+                      <Style>
+                        <FontFamily>Lucida Console</FontFamily>
+                      </Style>
+                    </TextRun>
                     <TextRun>
                       <Label>Address_ZipCode</Label>
                       <Value>=First(Fields!Address_ZipCode.Value, "Header")</Value>
@@ -751,7 +750,7 @@
                     </TextRun>
                     <TextRun>
                       <Label>Phone_Extension</Label>
-                      <Value>=First(Fields!Phone_Extension.Value, "Header")</Value>
+                      <Value>=FIRST(Fields!Phone_Extension.Value, "Header")</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>
@@ -764,30 +763,22 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>Summary from </Value>
-                      <Style>
-                        <FontWeight>SemiBold</FontWeight>
-                      </Style>
+                      <Value>Receipts for </Value>
+                      <Style />
                     </TextRun>
                     <TextRun>
-                      <Label>@startDate</Label>
-                      <Value>=Format(Parameters!startDate.Value, "MM/dd/yyyy")</Value>
+                      <Value>=Parameters!startDate.Value</Value>
                       <Style>
-                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>
                     <TextRun>
                       <Value> to </Value>
-                      <Style>
-                        <FontWeight>SemiBold</FontWeight>
-                      </Style>
+                      <Style />
                     </TextRun>
                     <TextRun>
-                      <Label>@endDate</Label>
-                      <Value>=Format(Parameters!endDate.Value, "MM/dd/yyyy")</Value>
+                      <Value>=Parameters!endDate.Value</Value>
                       <Style>
-                        <FontWeight>SemiBold</FontWeight>
                         <Format>d</Format>
                       </Style>
                     </TextRun>
@@ -799,9 +790,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>0.8in</Top>
-              <Left>2.19184in</Left>
+              <Left>2.25in</Left>
               <Height>1.2in</Height>
-              <Width>4.11631in</Width>
+              <Width>4in</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>

@@ -26,7 +26,7 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        Transactions.InvoiceNumber, Transactions.TransactionDate, Transactions.VoidedStatus_VoidedOn, Transactions.VoidedStatus_VoidedBy, Transactions.Payee_FirstName, Transactions.Payee_LastName, 
+      <CommandText>SELECT        Transactions.InvoiceNumber, FORMAT(Transactions.TransactionDate,'MM/dd/yyyy') AS TransactionDate, Transactions.VoidedStatus_VoidedOn, Transactions.VoidedStatus_VoidedBy, Transactions.Payee_FirstName, Transactions.Payee_LastName, 
                          Transactions.Payee_MiddleName, Transactions.Amount, Transactions.ChangeDue, Transactions_Payments.Amount AS PaymentAmounts, PaymentOptions.PaymentMethod, Users.FirstName, Users.LastName, 
                          Departments.Name, Departments.Address_City, Departments.Address_State, Departments.Address_Street, Departments.Address_ZipCode, Departments.Phone_Extension, Departments.Phone_Number
 FROM            Transactions INNER JOIN
@@ -44,7 +44,7 @@ WHERE        (Transactions.TransactionDate BETWEEN @startDate AND @endDate) AND 
       </Field>
       <Field Name="TransactionDate">
         <DataField>TransactionDate</DataField>
-        <rd:TypeName>System.DateTime</rd:TypeName>
+        <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="VoidedStatus_VoidedOn">
         <DataField>VoidedStatus_VoidedOn</DataField>

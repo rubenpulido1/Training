@@ -63,6 +63,7 @@
     <DataSet Include="ProjectsList.rsd" />
     <DataSet Include="ProjectsSummary.rsd" />
     <DataSet Include="ReprintReceipts.rsd" />
+    <DataSet Include="Test.rsd" />
     <DataSet Include="TotalDue.rsd" />
     <DataSet Include="TotalPayments.rsd" />
     <DataSet Include="TransactionsByPayee.rsd" />
@@ -73,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Report Include="CertificatesList.rdl" />
+    <Report Include="Copy of ListReceipts.rdl" />
     <Report Include="DepositItemsSummary.rdl" />
     <Report Include="DepositPermit.rdl" />
     <Report Include="FeeDistributions.rdl" />
@@ -84,6 +86,7 @@
     <Report Include="ProjectsList.rdl" />
     <Report Include="ProjectsSummary.rdl" />
     <Report Include="ReprintReceipts.rdl" />
+    <Report Include="Test.rdl" />
     <Report Include="TransactionByPayee.rdl" />
     <Report Include="VoidedReceipts.rdl" />
   </ItemGroup>

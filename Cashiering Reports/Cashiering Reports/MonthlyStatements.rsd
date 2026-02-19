@@ -26,56 +26,73 @@
           <rd:DbType>String</rd:DbType>
         </DataSetParameter>
       </DataSetParameters>
-      <CommandText>SELECT        SUM(FeeDistributions.Amount) AS TotalAmount, Funds.FundNumber, Funds.AccountNumber, Funds.ProjectId, Departments.Name, Funds.Description, FeeDistributions.FeeId, FeeDistributions.FundId, 
-                         Departments.Director_Name, Departments.Director_Title, Projects.ProjectNumber
-FROM            FeeDistributions INNER JOIN
-                         Funds ON FeeDistributions.FundId = Funds.Id LEFT OUTER JOIN
-                         Projects ON Funds.ProjectId = Projects.Id INNER JOIN
-                         Units ON Funds.UnitId = Units.Id INNER JOIN
-                         Departments ON Units.DepartmentId = Departments.Id
-WHERE        (FeeDistributions.CreatedAt BETWEEN @startDate AND @endDate) AND (Funds.UnitId = @unitId)
-GROUP BY FeeDistributions.FeeId, FeeDistributions.FundId, Funds.FundNumber, Funds.AccountNumber, Funds.ProjectId, Departments.Name, Funds.Description, Departments.Director_Name, Departments.Director_Title, 
-                         Projects.ProjectNumber</CommandText>
+      <CommandText>WITH
+  MonthlyStatement
+  AS
+  (
+
+    SELECT
+      Funds2.Description, Funds2.FundNumber, Departments.Name, Funds2.AccountNumber, Projects2.ProjectNumber,
+      Transactions.InvoiceNumber, Transactions_LineItems.Amount AS TLAmount, FeeDistributions.Amount AS FDEAmount,
+      ROUND(
+          CASE 
+            WHEN Percentage = 1 THEN Transactions_LineItems.Amount * (FeeDistributions.Amount / 100.0)
+            ELSE FeeDistributions.Amount
+          END
+        , 2) AS FDAmount,
+
+      ROW_NUMBER() OVER(
+  PARTITION BY Transactions_LineItems.Id, Funds2.VersionSetId, Projects2.VersionSetId
+  ORDER BY Funds2.EffectiveDate DESC, Projects2.EffectiveDate DESC
+  ) AS Rank
+
+    FROM
+      Transactions INNER JOIN
+      Transactions_LineItems ON Transactions.Id = Transactions_LineItems.TransactionId INNER JOIN
+      FeeDistributions ON Transactions_LineItems.FeeId = FeeDistributions.FeeId INNER JOIN
+      Funds ON FeeDistributions.FundId = Funds.Id INNER JOIN
+      Funds Funds2 ON Funds.VersionSetId = Funds2.VersionSetId
+        AND Funds2.EffectiveDate &lt;= CAST(Transactions.TransactionDate AS DATE)
+        AND (Funds2.EffectiveEndDate IS NULL OR Funds2.EffectiveEndDate &gt; CAST(Transactions.TransactionDate AS DATE)) LEFT OUTER JOIN
+      Projects ON Funds.ProjectId = Projects.Id LEFT OUTER JOIN
+      Projects Projects2 ON Projects.VersionSetId = Projects2.VersionSetId
+        AND (Projects2.EffectiveDate IS NULL OR Projects2.EffectiveDate &lt;= CAST(Transactions.TransactionDate AS DATE))
+        AND (Projects2.EffectiveEndDate IS NULL OR Projects2.EffectiveEndDate &gt; CAST(Transactions.TransactionDate AS DATE)) INNER JOIN
+      Units ON Transactions.UnitId = Units.Id INNER JOIN
+      Departments ON Units.DepartmentId = Departments.Id
+    WHERE
+  (Transactions.TransactionDate BETWEEN @startDate AND @endDate)
+      AND (Transactions.UnitId = @unitId)
+      AND FeeDistributions.EffectiveDate &lt;= CAST(Transactions.TransactionDate AS DATE)
+      AND (FeeDistributions.EffectiveEndDate IS NULL OR FeeDistributions.EffectiveEndDate &gt; CAST(Transactions.TransactionDate AS DATE))
+
+  )
+
+SELECT Description, FundNumber, Name, AccountNumber, ProjectNumber, FORMAT(SUM(FDAmount), '0.00') AS Amount
+FROM MonthlyStatement
+WHERE Rank = 1
+GROUP BY Description, FundNumber, Name, AccountNumber, ProjectNumber
+ORDER BY SUM(FDAmount)</CommandText>
     </Query>
     <Fields>
-      <Field Name="TotalAmount">
-        <DataField>TotalAmount</DataField>
-        <rd:TypeName>System.Decimal</rd:TypeName>
+      <Field Name="Amount">
+        <DataField>Amount</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="FundNumber">
         <DataField>FundNumber</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Name">
+        <DataField>Name</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="AccountNumber">
         <DataField>AccountNumber</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
-      <Field Name="ProjectId">
-        <DataField>ProjectId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="Name">
-        <DataField>Name</DataField>
-        <rd:TypeName>System.String</rd:TypeName>
-      </Field>
       <Field Name="Description">
         <DataField>Description</DataField>
-        <rd:TypeName>System.String</rd:TypeName>
-      </Field>
-      <Field Name="FeeId">
-        <DataField>FeeId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="FundId">
-        <DataField>FundId</DataField>
-        <rd:TypeName>System.Guid</rd:TypeName>
-      </Field>
-      <Field Name="Director_Name">
-        <DataField>Director_Name</DataField>
-        <rd:TypeName>System.String</rd:TypeName>
-      </Field>
-      <Field Name="Director_Title">
-        <DataField>Director_Title</DataField>
         <rd:TypeName>System.String</rd:TypeName>
       </Field>
       <Field Name="ProjectNumber">
